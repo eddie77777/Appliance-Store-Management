@@ -4,7 +4,7 @@ import javax.swing.*;
 public class MainPanel extends JPanel {
     ImageIcon img;
     JLabel background;
-    private JButton btnPersoana;
+    private JButton btnAdresa;
     private JButton btnProdus;
 
     public  MainPanel ()
@@ -15,7 +15,7 @@ public class MainPanel extends JPanel {
         background.setVisible(true);
 
 
-        btnPersoana = new JButton ("Persoana");
+        btnAdresa = new JButton ("Adresa");
         btnProdus = new JButton ("Produs");
 
         //adjust size and set layout
@@ -23,13 +23,26 @@ public class MainPanel extends JPanel {
         setLayout (null);
 
         //set component bounds (only needed by Absolute Positioning)
-        btnPersoana.setBounds (560, 380, 300, 100);
+        btnAdresa.setBounds (560, 380, 300, 100);
         btnProdus.setBounds (560, 90, 300, 100);
         background.setBounds(0, 0, 944, 574);
 
         //add components
-        add (btnPersoana);
+        add (btnAdresa);
         add (btnProdus);
         add (background);
+
+        //activities
+        btnAdresa.addActionListener(e -> {
+            try {
+                Main.changeCurrentPanel(new AdresaPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+
+
     }
 }
