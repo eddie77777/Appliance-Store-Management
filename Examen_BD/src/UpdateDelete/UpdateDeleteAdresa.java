@@ -25,11 +25,11 @@ public class UpdateDeleteAdresa extends  JFrame{
 
     public UpdateDeleteAdresa ()
     {
-
         frame_update_delete_adresa = new JFrame("Adrese");
-        frame_update_delete_adresa.setSize(938, 568);
+        frame_update_delete_adresa.setSize(568, 568);
         frame_update_delete_adresa.setLocationRelativeTo(null);
         frame_update_delete_adresa.setVisible(true);
+        frame_update_delete_adresa.setLayout(null);
 
         lblJudet = new JLabel ("Judet:");
         tfldJudet = new JTextField (1);
@@ -52,12 +52,29 @@ public class UpdateDeleteAdresa extends  JFrame{
         //setPreferredSize (new Dimension(938, 568));
         //setLayout (null);
 
+        lblJudet.setBounds (184, 55, 100, 25);
+        tfldJudet.setBounds (184, 75, 200, 25);
+        lblLocalitate.setBounds (184, 100, 100, 25);
+        tfldLocalitate.setBounds (184, 120, 200, 25);
+        lblStrada.setBounds (184, 145, 100, 25);
+        tfldStrada.setBounds (184, 165, 200, 25);
+        lblNumar.setBounds (184, 190, 100, 25);
+        tfldNumar.setBounds (184, 210, 200, 25);
+        lblBloc.setBounds (184, 235, 100, 25);
+        tfldBloc.setBounds (184, 255, 200, 25);
+        lblScara.setBounds (184, 280, 100, 25);
+        tfldScara.setBounds (184, 300, 200, 25);
+        lblApartament.setBounds (184, 325, 100, 25);
+        tfldApartament.setBounds (184, 345, 200, 25);
+        modify.setBounds(50,400,100,60);
+        delete.setBounds(418,400,100,60);
+
         frame_update_delete_adresa.add (lblJudet);
         frame_update_delete_adresa.add (tfldJudet);
         frame_update_delete_adresa.add (lblLocalitate);
         frame_update_delete_adresa.add (tfldLocalitate);
         frame_update_delete_adresa.add (lblStrada);
-        frame_update_delete_adresa.add(tfldStrada);
+        frame_update_delete_adresa.add (tfldStrada);
         frame_update_delete_adresa.add (lblNumar);
         frame_update_delete_adresa.add (tfldNumar);
         frame_update_delete_adresa.add (lblBloc);
@@ -69,22 +86,7 @@ public class UpdateDeleteAdresa extends  JFrame{
         frame_update_delete_adresa.add (modify);
         frame_update_delete_adresa.add (delete);
 
-        lblJudet.setBounds (100, 55, 100, 25);
-        tfldJudet.setBounds (100, 75, 200, 25);
-        lblLocalitate.setBounds (100, 100, 100, 25);
-        tfldLocalitate.setBounds (100, 120, 200, 25);
-        lblStrada.setBounds (100, 145, 100, 25);
-        tfldStrada.setBounds (100, 165, 200, 25);
-        lblNumar.setBounds (100, 190, 100, 25);
-        tfldNumar.setBounds (100, 210, 200, 25);
-        lblBloc.setBounds (100, 235, 100, 25);
-        tfldBloc.setBounds (100, 255, 200, 25);
-        lblScara.setBounds (100, 280, 100, 25);
-        tfldScara.setBounds (100, 300, 200, 25);
-        lblApartament.setBounds (100, 325, 100, 25);
-        tfldApartament.setBounds (100, 345, 200, 25);
-        modify.setBounds(50,500,100,60);
-        delete.setBounds(750,500,100,60);
+
 
     }
 }
