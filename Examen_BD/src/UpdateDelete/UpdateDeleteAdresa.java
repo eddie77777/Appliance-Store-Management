@@ -121,5 +121,18 @@ public class UpdateDeleteAdresa extends  JFrame{
                 }
             }
         });
+
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    DBUtils.DeleteAdresa(id_adresa);
+                    Main.changeCurrentPanel(new AdresaPanel());
+                    frame_update_delete_adresa.setVisible(false);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 }
