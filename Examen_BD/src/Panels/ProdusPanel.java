@@ -30,7 +30,7 @@ public class ProdusPanel extends JPanel {
 
     public ProdusPanel() throws SQLException {
 
-        listaProduse = new JList (DBUtils.GetProduse());
+        listaProduse = new JList(DBUtils.GetProduse());
 
         btnAdaugare = new JButton("Adaugare");
         lblNumeProdus = new JLabel("Nume produs:");
@@ -109,7 +109,11 @@ public class ProdusPanel extends JPanel {
                     if (selectedObj instanceof Produs) {
                         Produs produsSelectat = (Produs) selectedObj;
                         System.out.println(produsSelectat.getId_produs());
-                        UpdateDeleteProdus udp = new UpdateDeleteProdus();
+                        try {
+                            UpdateDeleteProdus udp = new UpdateDeleteProdus(produsSelectat.getId_produs());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
             }

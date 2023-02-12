@@ -38,27 +38,29 @@ public class UpdateDeleteAdresa extends  JFrame{
         frame_update_delete_adresa.setVisible(true);
         frame_update_delete_adresa.setLayout(null);
 
+        Adresa adr = DBUtils.GetAdresaForUpdateDelete(id_adresa);
+
         lblJudet = new JLabel ("Judet:");
         tfldJudet = new JTextField (1);
-        tfldJudet.setText(DBUtils.GetAdresaForUpdateDelete(id_adresa).getJudet());
+        tfldJudet.setText(adr.getJudet());
         lblLocalitate = new JLabel ("Localitate:");
         tfldLocalitate = new JTextField (1);
-        tfldLocalitate.setText(DBUtils.GetAdresaForUpdateDelete(id_adresa).getLocalitate());
+        tfldLocalitate.setText(adr.getLocalitate());
         lblStrada = new JLabel ("Strada:");
         tfldStrada = new JTextField (1);
-        tfldStrada.setText(DBUtils.GetAdresaForUpdateDelete(id_adresa).getStrada());
+        tfldStrada.setText(adr.getStrada());
         lblNumar = new JLabel ("Numar:");
         tfldNumar = new JTextField (1);
-        tfldNumar.setText(String.valueOf(DBUtils.GetAdresaForUpdateDelete(id_adresa).getNumar()));
+        tfldNumar.setText(String.valueOf(adr.getNumar()));
         lblBloc = new JLabel ("Bloc:");
         tfldBloc = new JTextField (1);
-        tfldBloc.setText(String.valueOf(DBUtils.GetAdresaForUpdateDelete(id_adresa).getBloc()));
+        tfldBloc.setText(String.valueOf(adr.getBloc()));
         lblScara = new JLabel ("Scara:");
         tfldScara = new JTextField (1);
-        tfldScara.setText(DBUtils.GetAdresaForUpdateDelete(id_adresa).getScara());
+        tfldScara.setText(adr.getScara());
         lblApartament = new JLabel ("Apartament:");
         tfldApartament = new JTextField (1);
-        tfldApartament.setText(String.valueOf(DBUtils.GetAdresaForUpdateDelete(id_adresa).getApartament()));
+        tfldApartament.setText(String.valueOf(adr.getApartament()));
         modify = new JButton("Modificare");
         delete = new JButton("Stergere");
 

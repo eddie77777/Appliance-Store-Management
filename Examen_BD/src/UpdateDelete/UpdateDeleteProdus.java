@@ -1,5 +1,14 @@
 package UpdateDelete;
+import DataBase.DBUtils;
+import Main.Main;
+import Models.Produs;
+import Panels.AdresaPanel;
+import Panels.ProdusPanel;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class UpdateDeleteProdus extends  JFrame{
     private JLabel lblNumeProdus;
@@ -15,22 +24,28 @@ public class UpdateDeleteProdus extends  JFrame{
 
     public static JFrame frame_update_delete_produs;
 
-    public UpdateDeleteProdus ()
-    {
+    public UpdateDeleteProdus (int id_produs) throws SQLException {
+
         frame_update_delete_produs = new JFrame("Adrese");
         frame_update_delete_produs.setSize(568, 568);
         frame_update_delete_produs.setLocationRelativeTo(null);
         frame_update_delete_produs.setVisible(true);
         frame_update_delete_produs.setLayout(null);
 
-        lblNumeProdus = new JLabel ("Judet:");
+        Produs prd = DBUtils.GetProdusForUpdateDelete(id_produs);
+
+        lblNumeProdus = new JLabel ("Nume produs:");
         tfldNumeProdus = new JTextField (1);
-        lblPret = new JLabel ("Localitate:");
+        tfldNumeProdus.setText(prd.getNume_produs());
+        lblPret = new JLabel ("Pret:");
         tfldPret = new JTextField (1);
-        lblStoc = new JLabel ("Strada:");
+        tfldPret.setText(String.valueOf(prd.getPret()));
+        lblStoc = new JLabel ("Stoc:");
         tfldStoc = new JTextField (1);
-        lblSpecificatii = new JLabel ("Numar:");
+        tfldStoc.setText(String.valueOf(prd.getStoc()));
+        lblSpecificatii = new JLabel ("Specificatii:");
         tfldSpecificatii = new JTextField (1);
+        tfldSpecificatii.setText(String.valueOf(prd.getSpecificatii()));
         modify = new JButton("Modificare");
         delete = new JButton("Stergere");
 
@@ -59,6 +74,40 @@ public class UpdateDeleteProdus extends  JFrame{
         frame_update_delete_produs.add (tfldSpecificatii);
         frame_update_delete_produs.add (modify);
         frame_update_delete_produs.add (delete);
+
+        modify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try
+                {
+                    prd.setId_produs(id_produs);
+                    prd.setNume_produs(tfldNumeProdus.getText());
+                    prd.setPret(Float.valueOf(tfldPret.getText()));
+                    prd.setStoc(Integer.valueOf(tfldStoc.getText()));
+                    prd.setSpecificatii(tfldSpecificatii.getText());
+                    DBUtils.UpdateProdus(prd);
+                    Main.changeCurrentPanel(new ProdusPanel());
+                    frame_update_delete_produs.setVisible(false);
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    DBUtils.DeleteProdus(id_produs);
+                    Main.changeCurrentPanel(new ProdusPanel());
+                    frame_update_delete_produs.setVisible(false);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
     }
 }
