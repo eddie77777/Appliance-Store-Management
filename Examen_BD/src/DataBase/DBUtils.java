@@ -123,12 +123,13 @@ public class DBUtils {
 
 
 
-    public static void UpdateProdusForAFrigorific(int id_friforific, int id_produs) throws SQLException {
+   /* public static void UpdateProdusForAFrigorific(int id_friforific, int id_produs) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate(
                 "UPDATE public.frigorific SET id_produs = " + id_produs + " WHERE id_frigorific =" + id_friforific + ";"
         );
-    }
+    }*/
+
 
     public static void DeleteAdresa(int id_adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
@@ -143,6 +144,27 @@ public class DBUtils {
                 "DELETE FROM frigorific WHERE id_frigorific = " + id_frigorific + ";"
         );
     }
+    public static Produs GetProdusForUpdateDelete(int id_produs) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.produs WHERE id_produs = " + id_produs + ";");
+        resultSet.next();
+        return new Produs((resultSet));
+    }
 
+    public static void UpdateProdus(Produs produs) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "UPDATE public.produs SET nume_produs = '" + produs.getNume_produs()  + "' ,pret = " + produs.getPret()  +
+                        " ,stoc = " + produs.getStoc() + " ,specificatii = '" + produs.getSpecificatii() +
+                        "' WHERE id_produs = " + produs.getId_produs() + ";"
+        );
+    }
+
+    public static void DeleteProdus(int id_produs) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "DELETE FROM produs WHERE id_produs = " + id_produs + ";"
+        );
+    }
 
 }
