@@ -61,26 +61,6 @@ public class UpdateDeleteAdresa extends  JFrame{
         tfldApartament.setText(String.valueOf(DBUtils.GetAdresaForUpdateDelete(id_adresa).getApartament()));
         modify = new JButton("Modificare");
         delete = new JButton("Stergere");
-        modify.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Adresa adresa = DBUtils.GetAdresaForUpdateDelete(id_adresa);
-                    adresa.setJudet(tfldJudet.getText());
-                    adresa.setLocalitate(tfldLocalitate.getText());
-                    adresa.setStrada(tfldStrada.getText());
-                    adresa.setNumar(Integer.parseInt(tfldNumar.getText()));
-                    adresa.setBloc(Integer.parseInt(tfldBloc.getText()));
-                    adresa.setScara(tfldScara.getText());
-                    adresa.setApartament(Integer.parseInt(tfldApartament.getText()));
-                    DBUtils.UpdateAdresa(adresa);
-                    Main.changeCurrentPanel(new AdresaPanel());
-                    frame_update_delete_adresa.setVisible(false);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
 
         //adjust size and set layout
         //setPreferredSize (new Dimension(938, 568));
@@ -119,5 +99,27 @@ public class UpdateDeleteAdresa extends  JFrame{
         frame_update_delete_adresa.add (tfldApartament);
         frame_update_delete_adresa.add (modify);
         frame_update_delete_adresa.add (delete);
+
+        //actiuni
+        modify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Adresa adresa = DBUtils.GetAdresaForUpdateDelete(id_adresa);
+                    adresa.setJudet(tfldJudet.getText());
+                    adresa.setLocalitate(tfldLocalitate.getText());
+                    adresa.setStrada(tfldStrada.getText());
+                    adresa.setNumar(Integer.parseInt(tfldNumar.getText()));
+                    adresa.setBloc(Integer.parseInt(tfldBloc.getText()));
+                    adresa.setScara(tfldScara.getText());
+                    adresa.setApartament(Integer.parseInt(tfldApartament.getText()));
+                    DBUtils.UpdateAdresa(adresa);
+                    Main.changeCurrentPanel(new AdresaPanel());
+                    frame_update_delete_adresa.setVisible(false);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 }

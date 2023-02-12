@@ -36,24 +36,6 @@ public class AdresaPanel extends JPanel{
     public AdresaPanel () throws SQLException {
         //construct components
         listaAdrese = new JList (DBUtils.GetAdrese());
-        listaAdrese.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    JList list = (JList) e.getSource();
-                    Object selectedObj = list.getSelectedValue();
-                    if (selectedObj instanceof Adresa) {
-                        Adresa adresaSelectata = (Adresa) selectedObj;
-                        System.out.println(adresaSelectata.getId_adresa());
-                        try {
-                            UpdateDeleteAdresa uda = new UpdateDeleteAdresa(adresaSelectata.getId_adresa());
-                        } catch (SQLException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                }
-            }
-        });
 
 
         lblJudet = new JLabel ("Judet:");
@@ -70,30 +52,7 @@ public class AdresaPanel extends JPanel{
         tfldScara = new JTextField (1);
         lblApartament = new JLabel ("Apartament:");
         tfldApartament = new JTextField (1);
-
-
         btnAdaugare = new JButton ("Adaugare");
-        btnAdaugare.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    DBUtils.AdaugaAdresa(new Adresa(tfldJudet.getText(), tfldLocalitate.getText(), tfldStrada.getText(),
-                            Integer.parseInt(tfldNumar.getText()),Integer.parseInt(tfldBloc.getText()) ,
-                            tfldScara.getText(), Integer.parseInt(tfldApartament.getText())));
-                    listaAdrese.setListData(DBUtils.GetAdrese());
-                    tfldJudet.setText("");
-                    tfldLocalitate.setText("");
-                    tfldStrada.setText("");
-                    tfldNumar.setText("");
-                    tfldBloc.setText("");
-                    tfldScara.setText("");
-                    tfldApartament.setText("");
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
-
         btnBack = new JButton ("<<");
 
         //adjust size and set layout
@@ -145,6 +104,46 @@ public class AdresaPanel extends JPanel{
 
             } catch (Exception ex) {
                 ex.printStackTrace();
+            }
+        });
+
+        btnAdaugare.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    DBUtils.AdaugaAdresa(new Adresa(tfldJudet.getText(), tfldLocalitate.getText(), tfldStrada.getText(),
+                            Integer.parseInt(tfldNumar.getText()),Integer.parseInt(tfldBloc.getText()) ,
+                            tfldScara.getText(), Integer.parseInt(tfldApartament.getText())));
+                    listaAdrese.setListData(DBUtils.GetAdrese());
+                    tfldJudet.setText("");
+                    tfldLocalitate.setText("");
+                    tfldStrada.setText("");
+                    tfldNumar.setText("");
+                    tfldBloc.setText("");
+                    tfldScara.setText("");
+                    tfldApartament.setText("");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        listaAdrese.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JList list = (JList) e.getSource();
+                    Object selectedObj = list.getSelectedValue();
+                    if (selectedObj instanceof Adresa) {
+                        Adresa adresaSelectata = (Adresa) selectedObj;
+                        System.out.println(adresaSelectata.getId_adresa());
+                        try {
+                            UpdateDeleteAdresa uda = new UpdateDeleteAdresa(adresaSelectata.getId_adresa());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
             }
         });
 
