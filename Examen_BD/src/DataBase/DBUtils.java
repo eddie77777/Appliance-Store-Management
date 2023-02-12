@@ -59,7 +59,7 @@ public class DBUtils {
 
     public static void UpdateAdresa(Adresa adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
-        statement.executeUpdate(
+        /*statement.executeUpdate(
                 "UPDATE public.adresa SET judet = '" + adresa.getJudet()  + "' WHERE id_adresa = " + adresa.getId_adresa() + ";" +
                         "UPDATE public.adresa SET localitate = '" + adresa.getLocalitate()  + "' WHERE id_adresa = " + adresa.getId_adresa() + ";" +
                         "UPDATE public.adresa SET strada = '" + adresa.getStrada()  + "' WHERE id_adresa = " + adresa.getId_adresa() + ";" +
@@ -67,6 +67,20 @@ public class DBUtils {
                         "UPDATE public.adresa SET bloc = " + adresa.getBloc()  + " WHERE id_adresa = " + adresa.getId_adresa() + ";" +
                         "UPDATE public.adresa SET scara = '" + adresa.getScara()  + "' WHERE id_adresa = " + adresa.getId_adresa() + ";" +
                         "UPDATE public.adresa SET apartament = " + adresa.getApartament()  + " WHERE id_adresa = " + adresa.getId_adresa() + ";"
+        );*/
+        statement.executeUpdate(
+                "UPDATE public.adresa SET judet = '" + adresa.getJudet()  + "' ,localitate = '" + adresa.getLocalitate()  +
+                        "' ,strada = '" + adresa.getStrada() + "' ,numar = " + adresa.getNumar() +
+                        " ,bloc = " + adresa.getBloc() + " ,scara = '" + adresa.getScara() + "' " +
+                        " ,apartament = " + adresa.getApartament() +
+                        " WHERE id_adresa = " + adresa.getId_adresa() + ";"
+        );
+    }
+
+    public static void DeleteAdresa(int id_adresa) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "DELETE FROM adresa WHERE id_adresa = " + id_adresa + ";"
         );
     }
 }
