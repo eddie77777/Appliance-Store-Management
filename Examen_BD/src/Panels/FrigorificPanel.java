@@ -1,38 +1,52 @@
 package Panels;
 
 import Main.Main;
+import Models.Adresa;
+import Models.Frigorific;
+import Models.Produs;
+import UpdateDelete.UpdateDeleteAdresa;
+import DataBase.DBUtils;
+import UpdateDelete.UpdateDeleteFrigorific;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.Vector;
 
 public class FrigorificPanel extends JPanel {
 
     private JList listaFrogrifice;
-    private JList ListaProduse;
+    //private JList ListaProduse;
     private JLabel lblidProdus;
     private JTextField tfldid_produs;
     private JLabel lblProprietati;
     private JTextArea textProprietati;
-    private JButton btnBak;
+    private JButton btnBack;
     private JButton btnAdaugare;
 
-    public FrigorificPanel()
-    {
-        //construct preComponents
-        String[] listaFrogrificeItems = {"Item 1", "Item 2", "Item 3"};
-        String[] ListaProduseItems = {"Item 1", "Item 2", "Item 3"};
+    private JLabel lblIdProdus;
+    private JComboBox comboBoxIdProdus;
 
+    Produs produsSelectat;
+
+    public FrigorificPanel() throws SQLException {
         //construct components
-        listaFrogrifice = new JList (listaFrogrificeItems);
-        ListaProduse = new JList (ListaProduseItems);
+        listaFrogrifice = new JList (DBUtils.GetFrigorifice());
+        //ListaProduse = new JList (DBUtils.GetProduse());
         lblidProdus = new JLabel ("id_Produs:");
         tfldid_produs = new JTextField (1);
         lblProprietati = new JLabel ("Proprietati:");
         textProprietati = new JTextArea (5, 5);
-        btnBak = new JButton ("<<");
+        btnBack = new JButton ("<<");
         btnAdaugare = new JButton ("Adaugare");
+        lblIdProdus = new JLabel ("Produs:");
+        Vector<Produs> produse = DBUtils.GetProduse();
+        comboBoxIdProdus = new JComboBox(produse);
+
 
         //adjust size and set layout
         setPreferredSize (new Dimension(944, 574));
@@ -40,25 +54,46 @@ public class FrigorificPanel extends JPanel {
 
         //add components
         add (listaFrogrifice);
-        add (ListaProduse);
+        //add (ListaProduse);
         add (lblidProdus);
         add (tfldid_produs);
         add (lblProprietati);
         add (textProprietati);
-        add (btnBak);
+        add (btnBack);
         add (btnAdaugare);
+        add (comboBoxIdProdus);
+        add (lblIdProdus);
 
         //set component bounds (only needed by Absolute Positioning)
-        listaFrogrifice.setBounds (445, 0, 500, 250);
-        ListaProduse.setBounds (445, 325, 500, 250);
-        lblidProdus.setBounds (0, 85, 100, 25);
-        tfldid_produs.setBounds (0, 110, 200, 25);
+        listaFrogrifice.setBounds (445, 0, 500, 574);
+        //ListaProduse.setBounds (445, 325, 500, 250);
         lblProprietati.setBounds (0, 135, 100, 25);
         textProprietati.setBounds (0, 160, 200, 100);
-        btnBak.setBounds (0, 0, 50, 25);
+        btnBack.setBounds (0, 0, 50, 25);
         btnAdaugare.setBounds (0, 335, 100, 25);
+        comboBoxIdProdus.setBounds (0, 110, 200, 25);
+        lblIdProdus.setBounds (0, 85, 100, 25);
 
-        btnBak.addActionListener(new ActionListener() {
+        listaFrogrifice.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JList list = (JList) e.getSource();
+                    Object selectedObj = list.getSelectedValue();
+                    if (selectedObj instanceof Frigorific) {
+                        Frigorific frigorificSelectat = (Frigorific) selectedObj;
+                        System.out.println(frigorificSelectat.getId_frigorific());
+                        try {
+                            UpdateDeleteFrigorific udf = new UpdateDeleteFrigorific(frigorificSelectat.getId_frigorific());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            }
+        });
+
+        btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try
@@ -72,5 +107,29 @@ public class FrigorificPanel extends JPanel {
             }
         });
 
+        btnAdaugare.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    DBUtils.AdaugaFrigorific(new Frigorific(produsSelectat.getId_produs(), textProprietati.getText()));
+                    listaFrogrifice.setListData(DBUtils.GetFrigorifice());
+                    textProprietati.setText("");
+                    comboBoxIdProdus.setSelectedItem(null);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        comboBoxIdProdus.setSelectedItem(null);
+        comboBoxIdProdus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object selectedObj = comboBoxIdProdus.getSelectedItem();
+                if (selectedObj instanceof Produs) {
+                    produsSelectat = (Produs) selectedObj;
+                }
+            }
+        });
     }
 }

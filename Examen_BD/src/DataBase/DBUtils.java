@@ -1,6 +1,7 @@
 package DataBase;
 
 import Models.Adresa;
+import Models.Frigorific;
 import Models.Produs;
 
 import java.sql.ResultSet;
@@ -31,6 +32,40 @@ public class DBUtils {
         return adrese;
     }
 
+    public static Vector<Frigorific> GetFrigorifice() throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.frigorific;");
+        Vector<Frigorific> frigorifice = new Vector<>();
+        while(resultSet.next())
+        {
+            frigorifice.add(new Frigorific(resultSet));
+        }
+        return frigorifice;
+    }
+
+    public static Adresa GetAdresaForUpdateDelete(Integer id_adresa) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.adresa WHERE id_adresa = " + id_adresa + ";");
+        resultSet.next();
+        return new Adresa((resultSet));
+    }
+
+    public static Frigorific GetFrigorificForUpdateDelete(Integer id_frigorific) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.frigorific WHERE id_frigorific = "
+                + id_frigorific + ";");
+        resultSet.next();
+        return new Frigorific((resultSet));
+    }
+
+    public static Produs GetProdusById(Integer id_produs) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.produs WHERE id_produs =" +
+                " " + id_produs + ";");
+        resultSet.next();
+        return new Produs((resultSet));
+    }
+
     public static boolean AdaugaAdresa(Adresa adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate("INSERT INTO public.adresa(judet, localitate,strada, numar, bloc, scara, apartament) VALUES ('"
@@ -50,11 +85,11 @@ public class DBUtils {
         return true;
     }
 
-    public static Adresa GetAdresaForUpdateDelete(Integer id_adresa) throws SQLException {
+    public static boolean AdaugaFrigorific(Frigorific frigorific) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.adresa WHERE id_adresa = " + id_adresa + ";");
-        resultSet.next();
-        return new Adresa((resultSet));
+        statement.executeUpdate("INSERT INTO public.frigorific(id_produs, proprietati) VALUES ("
+                + frigorific.getId_produs() + ", '" + frigorific.getProprietati() + "');");
+        return true;
     }
 
     public static void UpdateAdresa(Adresa adresa) throws SQLException {
@@ -77,10 +112,37 @@ public class DBUtils {
         );
     }
 
+    public static void UpdateFrigorific(Frigorific frigorific) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "UPDATE public.frigorific SET proprietati = '" + frigorific.getProprietati()  +
+                        "' , id_produs = " + frigorific.getId_produs() +
+                        " WHERE id_frigorific = " + frigorific.getId_frigorific() + ";"
+        );
+    }
+
+
+
+    public static void UpdateProdusForAFrigorific(int id_friforific, int id_produs) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "UPDATE public.frigorific SET id_produs = " + id_produs + " WHERE id_frigorific =" + id_friforific + ";"
+        );
+    }
+
     public static void DeleteAdresa(int id_adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate(
                 "DELETE FROM adresa WHERE id_adresa = " + id_adresa + ";"
         );
     }
+
+    public static void DeleteFrigorific(int id_frigorific) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "DELETE FROM frigorific WHERE id_frigorific = " + id_frigorific + ";"
+        );
+    }
+
+
 }

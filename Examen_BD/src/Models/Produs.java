@@ -12,10 +12,11 @@ public class Produs {
 
     @Override
     public String toString() {
-        return nume_produs + "           " +
-                pret + "             " +
-                stoc + "             " +
-                specificatii;
+        return "id: " + id_produs + "           " +
+                "Nume: " + nume_produs + "           " +
+                "Pret: " + pret + "             " +
+                "Stoc: " + stoc + "             " +
+                "Spec: " + specificatii;
     }
 
     public Produs(String nume_produs, float pret, int stoc, String specificatii) {
