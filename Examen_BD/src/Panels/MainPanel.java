@@ -1,3 +1,8 @@
+package Panels;
+
+import Panels.ProdusPanel;
+import Main.Main;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -44,7 +49,7 @@ public class MainPanel extends JPanel {
 
         btnProdus.addActionListener(e -> {
             try {
-                Main.changeCurrentPanel(new AdresaPanel());
+                Main.changeCurrentPanel(new ProdusPanel());
 
             } catch (Exception ex) {
                 ex.printStackTrace();

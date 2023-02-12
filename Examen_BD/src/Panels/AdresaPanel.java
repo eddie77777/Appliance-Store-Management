@@ -1,8 +1,14 @@
+package Panels;
+
+import DataBase.DBUtils;
+import Main.Main;
 import Models.Adresa;
 import UpdateDelete.UpdateDeleteAdresa;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -39,14 +45,17 @@ public class AdresaPanel extends JPanel{
                     if (selectedObj instanceof Adresa) {
                         Adresa adresaSelectata = (Adresa) selectedObj;
                         System.out.println(adresaSelectata.getId_adresa());
-                        UpdateDeleteAdresa uda = new UpdateDeleteAdresa();
+                        try {
+                            UpdateDeleteAdresa uda = new UpdateDeleteAdresa(adresaSelectata.getId_adresa());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
             }
         });
 
 
-        btnAdaugare = new JButton ("Adaugare");
         lblJudet = new JLabel ("Judet:");
         tfldJudet = new JTextField (1);
         lblLocalitate = new JLabel ("Localitate:");
@@ -61,6 +70,30 @@ public class AdresaPanel extends JPanel{
         tfldScara = new JTextField (1);
         lblApartament = new JLabel ("Apartament:");
         tfldApartament = new JTextField (1);
+
+
+        btnAdaugare = new JButton ("Adaugare");
+        btnAdaugare.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    DBUtils.AdaugaAdresa(new Adresa(tfldJudet.getText(), tfldLocalitate.getText(), tfldStrada.getText(),
+                            Integer.parseInt(tfldNumar.getText()),Integer.parseInt(tfldBloc.getText()) ,
+                            tfldScara.getText(), Integer.parseInt(tfldApartament.getText())));
+                    listaAdrese.setListData(DBUtils.GetAdrese());
+                    tfldJudet.setText("");
+                    tfldLocalitate.setText("");
+                    tfldStrada.setText("");
+                    tfldNumar.setText("");
+                    tfldBloc.setText("");
+                    tfldScara.setText("");
+                    tfldApartament.setText("");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
         btnBack = new JButton ("<<");
 
         //adjust size and set layout

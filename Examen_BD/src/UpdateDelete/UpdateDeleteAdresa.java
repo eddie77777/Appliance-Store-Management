@@ -1,7 +1,15 @@
 package UpdateDelete;
 
+import DataBase.DBUtils;
+import Models.Adresa;
+import Main.Main;
+import Panels.AdresaPanel;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class UpdateDeleteAdresa extends  JFrame{
     private JLabel lblJudet;
@@ -23,8 +31,7 @@ public class UpdateDeleteAdresa extends  JFrame{
 
     public static JFrame frame_update_delete_adresa;
 
-    public UpdateDeleteAdresa ()
-    {
+    public UpdateDeleteAdresa (int id_adresa) throws SQLException {
         frame_update_delete_adresa = new JFrame("Adrese");
         frame_update_delete_adresa.setSize(568, 568);
         frame_update_delete_adresa.setLocationRelativeTo(null);
@@ -33,20 +40,47 @@ public class UpdateDeleteAdresa extends  JFrame{
 
         lblJudet = new JLabel ("Judet:");
         tfldJudet = new JTextField (1);
+        tfldJudet.setText(DBUtils.GetAdresaForUpdateDelete(id_adresa).getJudet());
         lblLocalitate = new JLabel ("Localitate:");
         tfldLocalitate = new JTextField (1);
+        tfldLocalitate.setText(DBUtils.GetAdresaForUpdateDelete(id_adresa).getLocalitate());
         lblStrada = new JLabel ("Strada:");
         tfldStrada = new JTextField (1);
+        tfldStrada.setText(DBUtils.GetAdresaForUpdateDelete(id_adresa).getStrada());
         lblNumar = new JLabel ("Numar:");
         tfldNumar = new JTextField (1);
+        tfldNumar.setText(String.valueOf(DBUtils.GetAdresaForUpdateDelete(id_adresa).getNumar()));
         lblBloc = new JLabel ("Bloc:");
         tfldBloc = new JTextField (1);
+        tfldBloc.setText(String.valueOf(DBUtils.GetAdresaForUpdateDelete(id_adresa).getBloc()));
         lblScara = new JLabel ("Scara:");
         tfldScara = new JTextField (1);
+        tfldScara.setText(DBUtils.GetAdresaForUpdateDelete(id_adresa).getScara());
         lblApartament = new JLabel ("Apartament:");
         tfldApartament = new JTextField (1);
+        tfldApartament.setText(String.valueOf(DBUtils.GetAdresaForUpdateDelete(id_adresa).getApartament()));
         modify = new JButton("Modificare");
         delete = new JButton("Stergere");
+        modify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Adresa adresa = DBUtils.GetAdresaForUpdateDelete(id_adresa);
+                    adresa.setJudet(tfldJudet.getText());
+                    adresa.setLocalitate(tfldLocalitate.getText());
+                    adresa.setStrada(tfldStrada.getText());
+                    adresa.setNumar(Integer.parseInt(tfldNumar.getText()));
+                    adresa.setBloc(Integer.parseInt(tfldBloc.getText()));
+                    adresa.setScara(tfldScara.getText());
+                    adresa.setApartament(Integer.parseInt(tfldApartament.getText()));
+                    DBUtils.UpdateAdresa(adresa);
+                    Main.changeCurrentPanel(new AdresaPanel());
+                    frame_update_delete_adresa.setVisible(false);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
         //adjust size and set layout
         //setPreferredSize (new Dimension(938, 568));
@@ -85,8 +119,5 @@ public class UpdateDeleteAdresa extends  JFrame{
         frame_update_delete_adresa.add (tfldApartament);
         frame_update_delete_adresa.add (modify);
         frame_update_delete_adresa.add (delete);
-
-
-
     }
 }

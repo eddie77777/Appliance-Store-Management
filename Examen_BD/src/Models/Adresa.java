@@ -24,8 +24,7 @@ public class Adresa {
                 apartament;
     }
 
-    public Adresa(int id_adresa, String judet, String localitate, String strada, int numar, int bloc, String scara, int apartament) {
-        this.id_adresa = id_adresa;
+    public Adresa(String judet, String localitate, String strada, int numar, int bloc, String scara, int apartament) {
         this.judet = judet;
         this.localitate = localitate;
         this.strada = strada;
@@ -91,15 +90,15 @@ public class Adresa {
     }
 
     public void setBloc(int bloc) {
-        bloc = bloc;
+        this.bloc = bloc;
     }
 
     public String getScara() {
         return scara;
     }
 
-    public void setScara(int scara) {
-        scara = scara;
+    public void setScara(String scara) {
+        this.scara = scara;
     }
 
     public int getApartament() {

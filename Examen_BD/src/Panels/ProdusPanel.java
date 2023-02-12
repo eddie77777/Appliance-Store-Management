@@ -1,7 +1,21 @@
+package Panels;
+
+import DataBase.DBUtils;
+import Models.Adresa;
+import Models.Produs;
+import UpdateDelete.UpdateDeleteProdus;
+import Main.Main;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+
 public class ProdusPanel extends JPanel {
-    private JList listProduse;
+    private JList listaProduse;
     private JButton btnAdaugare;
     private JLabel lblNumeProdus;
     private JTextField tfldNumeProdus;
@@ -14,14 +28,10 @@ public class ProdusPanel extends JPanel {
 
     private JButton btnBack;
 
-    public ProdusPanel() {
+    public ProdusPanel() throws SQLException {
 
+        listaProduse = new JList (DBUtils.GetProduse());
 
-        //construct preComponents
-        String[] component1Items = {"Item 1", "Item 2", "Item 3"};
-
-        //construct components
-        listProduse = new JList(component1Items);
         btnAdaugare = new JButton("Adaugare");
         lblNumeProdus = new JLabel("Nume produs:");
         tfldNumeProdus = new JTextField(1);
@@ -38,7 +48,7 @@ public class ProdusPanel extends JPanel {
         setLayout(null);
 
         //add components
-        add(listProduse);
+        add(listaProduse);
         add(btnAdaugare);
         add(lblNumeProdus);
         add(tfldNumeProdus);
@@ -51,7 +61,7 @@ public class ProdusPanel extends JPanel {
         add(btnBack);
 
         //set component bounds (only needed by Absolute Positioning)
-        listProduse.setBounds(240, 0, 700, 574);
+        listaProduse.setBounds(240, 0, 700, 574);
         btnAdaugare.setBounds(65, 405, 100, 25);
         lblNumeProdus.setBounds(0, 55, 100, 25);
         tfldNumeProdus.setBounds(0, 75, 200, 25);
@@ -64,6 +74,23 @@ public class ProdusPanel extends JPanel {
         btnBack.setBounds(0, 0, 50, 25);
 
         //actions
+        btnAdaugare.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    DBUtils.AdaugaProdus(new Produs(tfldNumeProdus.getText(), Integer.parseInt(tfldPret.getText()),
+                            Integer.parseInt(tfldStoc.getText()),tfldSpecificatii.getText()));
+                    listaProduse.setListData(DBUtils.GetProduse());
+                    tfldNumeProdus.setText("");
+                    tfldPret.setText("");
+                    tfldStoc.setText("");
+                    tfldSpecificatii.setText("");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
         btnBack.addActionListener(e -> {
             try {
                 Main.changeCurrentPanel(new MainPanel());
@@ -73,12 +100,18 @@ public class ProdusPanel extends JPanel {
             }
         });
 
-        listProduse.addListSelectionListener(e -> {
-            try {
-                Main.changeCurrentPanel(new MainPanel());
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        listaProduse.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JList list = (JList) e.getSource();
+                    Object selectedObj = list.getSelectedValue();
+                    if (selectedObj instanceof Produs) {
+                        Produs produsSelectat = (Produs) selectedObj;
+                        System.out.println(produsSelectat.getId_produs());
+                        UpdateDeleteProdus udp = new UpdateDeleteProdus();
+                    }
+                }
             }
         });
     }

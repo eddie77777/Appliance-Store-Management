@@ -1,3 +1,7 @@
+package Main;
+
+import Panels.MainPanel;
+
 import javax.swing.*;
 
 public class Main {

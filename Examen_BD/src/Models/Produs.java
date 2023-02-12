@@ -8,22 +8,21 @@ public class Produs {
     private String nume_produs;
     private float pret;
     private int stoc;
-    private String specificatii_comune;
+    private String specificatii;
 
     @Override
     public String toString() {
         return nume_produs + "           " +
                 pret + "             " +
                 stoc + "             " +
-                specificatii_comune;
+                specificatii;
     }
 
-    public Produs(int id_produs, String nume_produs, float pret, int stoc, String specificatii_comune) {
-        this.id_produs = id_produs;
+    public Produs(String nume_produs, float pret, int stoc, String specificatii) {
         this.nume_produs = nume_produs;
         this.pret = pret;
         this.stoc = stoc;
-        this.specificatii_comune = specificatii_comune;
+        this.specificatii = specificatii;
     }
 
     public Produs(ResultSet resultSet) throws SQLException {
@@ -31,7 +30,7 @@ public class Produs {
         this.nume_produs = resultSet.getString("nume_produs");
         this.pret = resultSet.getInt("pret");
         this.stoc = resultSet.getInt("stoc");
-        this.specificatii_comune = resultSet.getString("specificatii");
+        this.specificatii = resultSet.getString("specificatii");
     }
 
     public int getId_produs() {
@@ -66,12 +65,12 @@ public class Produs {
         this.stoc = stoc;
     }
 
-    public String getSpecificatii_comune() {
-        return specificatii_comune;
+    public String getSpecificatii() {
+        return specificatii;
     }
 
-    public void setSpecificatii_comune(String specificatii_comune) {
-        this.specificatii_comune = specificatii_comune;
+    public void setSpecificatii(String specificatii) {
+        this.specificatii = specificatii;
     }
 
 }
