@@ -3,7 +3,7 @@ package UpdateDelete;
 import javax.swing.*;
 import java.awt.*;
 
-public class UpdateDeleteAdresa extends  JPanel{
+public class UpdateDeleteAdresa extends  JFrame{
     private JLabel lblJudet;
     private JTextField tfldJudet;
     private JLabel lblLocalitate;
@@ -21,8 +21,16 @@ public class UpdateDeleteAdresa extends  JPanel{
     private JButton modify;
     private JButton delete;
 
-    UpdateDeleteAdresa ()
+    public static JFrame frame_update_delete_adresa;
+
+    public UpdateDeleteAdresa ()
     {
+
+        frame_update_delete_adresa = new JFrame("Adrese");
+        frame_update_delete_adresa.setSize(938, 568);
+        frame_update_delete_adresa.setLocationRelativeTo(null);
+        frame_update_delete_adresa.setVisible(true);
+
         lblJudet = new JLabel ("Judet:");
         tfldJudet = new JTextField (1);
         lblLocalitate = new JLabel ("Localitate:");
@@ -41,25 +49,25 @@ public class UpdateDeleteAdresa extends  JPanel{
         delete = new JButton("Stergere");
 
         //adjust size and set layout
-        setPreferredSize (new Dimension(938, 568));
-        setLayout (null);
+        //setPreferredSize (new Dimension(938, 568));
+        //setLayout (null);
 
-        add (lblJudet);
-        add (tfldJudet);
-        add (lblLocalitate);
-        add (tfldLocalitate);
-        add (lblStrada);
-        add (tfldStrada);
-        add (lblNumar);
-        add (tfldNumar);
-        add (lblBloc);
-        add (tfldBloc);
-        add (lblScara);
-        add (tfldScara);
-        add (lblApartament);
-        add (tfldApartament);
-        add (modify);
-        add (delete);
+        frame_update_delete_adresa.add (lblJudet);
+        frame_update_delete_adresa.add (tfldJudet);
+        frame_update_delete_adresa.add (lblLocalitate);
+        frame_update_delete_adresa.add (tfldLocalitate);
+        frame_update_delete_adresa.add (lblStrada);
+        frame_update_delete_adresa.add(tfldStrada);
+        frame_update_delete_adresa.add (lblNumar);
+        frame_update_delete_adresa.add (tfldNumar);
+        frame_update_delete_adresa.add (lblBloc);
+        frame_update_delete_adresa.add (tfldBloc);
+        frame_update_delete_adresa.add (lblScara);
+        frame_update_delete_adresa.add (tfldScara);
+        frame_update_delete_adresa.add (lblApartament);
+        frame_update_delete_adresa.add (tfldApartament);
+        frame_update_delete_adresa.add (modify);
+        frame_update_delete_adresa.add (delete);
 
         lblJudet.setBounds (100, 55, 100, 25);
         tfldJudet.setBounds (100, 75, 200, 25);
@@ -76,7 +84,7 @@ public class UpdateDeleteAdresa extends  JPanel{
         lblApartament.setBounds (100, 325, 100, 25);
         tfldApartament.setBounds (100, 345, 200, 25);
         modify.setBounds(50,500,100,60);
-        modify.setBounds(750,500,100,60);
+        delete.setBounds(750,500,100,60);
 
     }
 }

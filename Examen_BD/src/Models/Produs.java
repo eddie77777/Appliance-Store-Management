@@ -1,5 +1,8 @@
 package Models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Produs {
     private int id_produs;
     private String nume_produs;
@@ -7,12 +10,28 @@ public class Produs {
     private int stoc;
     private String specificatii_comune;
 
+    @Override
+    public String toString() {
+        return nume_produs + "           " +
+                pret + "             " +
+                stoc + "             " +
+                specificatii_comune;
+    }
+
     public Produs(int id_produs, String nume_produs, float pret, int stoc, String specificatii_comune) {
         this.id_produs = id_produs;
         this.nume_produs = nume_produs;
         this.pret = pret;
         this.stoc = stoc;
         this.specificatii_comune = specificatii_comune;
+    }
+
+    public Produs(ResultSet resultSet) throws SQLException {
+        this.id_produs = resultSet.getInt("id_produs");
+        this.nume_produs = resultSet.getString("nume_produs");
+        this.pret = resultSet.getInt("pret");
+        this.stoc = resultSet.getInt("stoc");
+        this.specificatii_comune = resultSet.getString("specificatii");
     }
 
     public int getId_produs() {
@@ -54,4 +73,5 @@ public class Produs {
     public void setSpecificatii_comune(String specificatii_comune) {
         this.specificatii_comune = specificatii_comune;
     }
+
 }

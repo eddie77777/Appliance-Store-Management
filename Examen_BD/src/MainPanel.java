@@ -42,7 +42,14 @@ public class MainPanel extends JPanel {
             }
         });
 
+        btnProdus.addActionListener(e -> {
+            try {
+                Main.changeCurrentPanel(new AdresaPanel());
 
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
 
     }
 }

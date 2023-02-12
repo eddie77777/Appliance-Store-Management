@@ -1,9 +1,15 @@
+import Models.Adresa;
+import UpdateDelete.UpdateDeleteAdresa;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class AdresaPanel extends JPanel{
 
-    private JList listAdrese;
+    private JList listaAdrese;
     private JButton btnAdaugare;
     private JLabel lblJudet;
     private JTextField tfldJudet;
@@ -21,13 +27,25 @@ public class AdresaPanel extends JPanel{
     private JTextField tfldApartament;
     private JButton btnBack;
 
-    public AdresaPanel ()
-    {
-        //construct preComponents
-        String[] component1Items = {"Item 1", "Item 2", "Item 3"};
-
+    public AdresaPanel () throws SQLException {
         //construct components
-        listAdrese = new JList (component1Items);
+        listaAdrese = new JList (DBUtils.GetAdrese());
+        listaAdrese.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JList list = (JList) e.getSource();
+                    Object selectedObj = list.getSelectedValue();
+                    if (selectedObj instanceof Adresa) {
+                        Adresa adresaSelectata = (Adresa) selectedObj;
+                        System.out.println(adresaSelectata.getId_adresa());
+                        UpdateDeleteAdresa uda = new UpdateDeleteAdresa();
+                    }
+                }
+            }
+        });
+
+
         btnAdaugare = new JButton ("Adaugare");
         lblJudet = new JLabel ("Judet:");
         tfldJudet = new JTextField (1);
@@ -50,7 +68,7 @@ public class AdresaPanel extends JPanel{
         setLayout (null);
 
         //add components
-        add (listAdrese);
+        add (listaAdrese);
         add (btnAdaugare);
         add (lblJudet);
         add (tfldJudet);
@@ -69,7 +87,7 @@ public class AdresaPanel extends JPanel{
         add (btnBack);
 
         //set component bounds (only needed by Absolute Positioning)
-        listAdrese.setBounds (240, 0, 700, 574);
+        listaAdrese.setBounds (240, 0, 700, 574);
         btnAdaugare.setBounds (65, 405, 100, 25);
         lblJudet.setBounds (0, 55, 100, 25);
         tfldJudet.setBounds (0, 75, 200, 25);
@@ -89,15 +107,6 @@ public class AdresaPanel extends JPanel{
 
         //actions
         btnBack.addActionListener(e -> {
-            try {
-                Main.changeCurrentPanel(new MainPanel());
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-
-        listAdrese.addListSelectionListener(e->{
             try {
                 Main.changeCurrentPanel(new MainPanel());
 

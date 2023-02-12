@@ -1,24 +1,49 @@
 package Models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Adresa {
     private int id_adresa;
     private String judet;
     private String localitate;
     private String strada;
     private int numar;
-    private int Bloc;
-    private int Scara;
+    private int bloc;
+    private String scara;
     private int apartament;
 
-    public Adresa(int id_adresa, String judet, String localitate, String strada, int numar, int bloc, int scara, int apartament) {
+    @Override
+    public String toString() {
+        return judet + "           " +
+                localitate + "             " +
+                strada + "             " +
+                numar + "             " +
+                bloc + "             " +
+                scara  + "             " +
+                apartament;
+    }
+
+    public Adresa(int id_adresa, String judet, String localitate, String strada, int numar, int bloc, String scara, int apartament) {
         this.id_adresa = id_adresa;
         this.judet = judet;
         this.localitate = localitate;
         this.strada = strada;
         this.numar = numar;
-        Bloc = bloc;
-        Scara = scara;
+        this.bloc = bloc;
+        this.scara = scara;
         this.apartament = apartament;
+    }
+
+    public Adresa(ResultSet resultSet) throws SQLException {
+        this.id_adresa = resultSet.getInt("id_adresa");
+        this.judet = resultSet.getString("judet");
+        this.localitate = resultSet.getString("localitate");
+        this.strada = resultSet.getString("strada");
+        this.numar = resultSet.getInt("numar");
+        this.bloc = resultSet.getInt("bloc");
+        this.scara = resultSet.getString("scara");
+        this.apartament = resultSet.getInt("apartament");
     }
 
     public int getId_adresa() {
@@ -62,19 +87,19 @@ public class Adresa {
     }
 
     public int getBloc() {
-        return Bloc;
+        return bloc;
     }
 
     public void setBloc(int bloc) {
-        Bloc = bloc;
+        bloc = bloc;
     }
 
-    public int getScara() {
-        return Scara;
+    public String getScara() {
+        return scara;
     }
 
     public void setScara(int scara) {
-        Scara = scara;
+        scara = scara;
     }
 
     public int getApartament() {
