@@ -4,6 +4,9 @@ import Panels.ProdusPanel;
 import Main.Main;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.*;
 
 public class MainPanel extends JPanel {
@@ -80,6 +83,17 @@ public class MainPanel extends JPanel {
 
             } catch (Exception ex) {
                 ex.printStackTrace();
+            }
+        });
+
+        btnSpalat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Main.changeCurrentPanel(new MasinaDeSpalatPanel());
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 

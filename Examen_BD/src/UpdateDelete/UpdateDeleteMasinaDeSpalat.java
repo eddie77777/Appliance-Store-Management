@@ -1,10 +1,10 @@
 package UpdateDelete;
 import DataBase.DBUtils;
 import Main.Main;
-import Models.Frigorific;
+import Models.MasinaDeSpalat;
 import Models.Produs;
-import Panels.AdresaPanel;
 import Panels.FrigorificPanel;
+import Panels.MasinaDeSpalatPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Vector;
 
-public class UpdateDeleteFrigorific extends  JFrame{
+public class UpdateDeleteMasinaDeSpalat extends  JFrame{
     private JLabel lblIdProdus;
     private JComboBox comboBoxIdProdus;
     private JLabel lblProprietati;
@@ -20,21 +20,21 @@ public class UpdateDeleteFrigorific extends  JFrame{
     private JButton modify;
     private JButton delete;
 
-    public static JFrame frame_update_delete_frigorific;
+    public static JFrame frame_update_delete_masina_de_spalat;
 
-    public UpdateDeleteFrigorific (int id_frigorific) throws SQLException {
-        frame_update_delete_frigorific = new JFrame("Frigorific");
-        frame_update_delete_frigorific.setSize(568, 568);
-        frame_update_delete_frigorific.setLocationRelativeTo(null);
-        frame_update_delete_frigorific.setVisible(true);
-        frame_update_delete_frigorific.setLayout(null);
+    public UpdateDeleteMasinaDeSpalat (int id_masina_de_spalat) throws SQLException {
+        frame_update_delete_masina_de_spalat = new JFrame("Masina de Spalat");
+        frame_update_delete_masina_de_spalat.setSize(568, 568);
+        frame_update_delete_masina_de_spalat.setLocationRelativeTo(null);
+        frame_update_delete_masina_de_spalat.setVisible(true);
+        frame_update_delete_masina_de_spalat.setLayout(null);
 
         lblIdProdus = new JLabel ("Produs:");
         Vector<Produs> produse = DBUtils.GetProduse();
         comboBoxIdProdus = new JComboBox(produse);
         lblProprietati = new JLabel ("Proprietati:");
         tfldProprietati = new JTextField (1);
-        tfldProprietati.setText(DBUtils.GetFrigorificForUpdateDelete(id_frigorific).getProprietati());
+        tfldProprietati.setText(DBUtils.GetMasinaDeSpalatForUpdateDelete(id_masina_de_spalat).getProprietati());
         modify = new JButton("Modificare");
         delete = new JButton("Stergere");
 
@@ -49,19 +49,19 @@ public class UpdateDeleteFrigorific extends  JFrame{
         modify.setBounds(50,400,100,60);
         delete.setBounds(418,400,100,60);
 
-        frame_update_delete_frigorific.add (comboBoxIdProdus);
-        frame_update_delete_frigorific.add (lblIdProdus);
-        frame_update_delete_frigorific.add (lblProprietati);
-        frame_update_delete_frigorific.add (tfldProprietati);
-        frame_update_delete_frigorific.add (modify);
-        frame_update_delete_frigorific.add (delete);
+        frame_update_delete_masina_de_spalat.add (comboBoxIdProdus);
+        frame_update_delete_masina_de_spalat.add (lblIdProdus);
+        frame_update_delete_masina_de_spalat.add (lblProprietati);
+        frame_update_delete_masina_de_spalat.add (tfldProprietati);
+        frame_update_delete_masina_de_spalat.add (modify);
+        frame_update_delete_masina_de_spalat.add (delete);
 
         int index = 0;
-        int idProdus = DBUtils.GetFrigorificForUpdateDelete(id_frigorific).getId_produs();
+        int idProdus = DBUtils.GetMasinaDeSpalatForUpdateDelete(id_masina_de_spalat).getId_produs();
         Produs produs = DBUtils.GetProdusById(idProdus);
         for(int i=0;i<produse.size();i++)
-                if(produse.elementAt(i).getId_produs() == produs.getId_produs())
-                    index = i;
+            if(produse.elementAt(i).getId_produs() == produs.getId_produs())
+                index = i;
         comboBoxIdProdus.setSelectedItem(produse.get(index));
 
         //inceput de modificare, e inutil acum
@@ -84,14 +84,14 @@ public class UpdateDeleteFrigorific extends  JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Frigorific frg = DBUtils.GetFrigorificForUpdateDelete(id_frigorific);
+                    MasinaDeSpalat spalat = DBUtils.GetMasinaDeSpalatForUpdateDelete(id_masina_de_spalat);
                     Object selectedObj = comboBoxIdProdus.getSelectedItem();
                     Produs prd = (Produs) selectedObj;
-                    frg.setId_produs(prd.getId_produs());
-                    frg.setProprietati(tfldProprietati.getText());
-                    DBUtils.UpdateFrigorific(frg);
-                    Main.changeCurrentPanel(new FrigorificPanel());
-                    frame_update_delete_frigorific.setVisible(false);
+                    spalat.setId_produs(prd.getId_produs());
+                    spalat.setProprietati(tfldProprietati.getText());
+                    DBUtils.UpdateMasinaDeSpalat(spalat);
+                    Main.changeCurrentPanel(new MasinaDeSpalatPanel());
+                    frame_update_delete_masina_de_spalat.setVisible(false);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -104,9 +104,9 @@ public class UpdateDeleteFrigorific extends  JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    DBUtils.DeleteFrigorific(id_frigorific);
+                    DBUtils.DeleteMasinaDeSpalat(id_masina_de_spalat);
                     Main.changeCurrentPanel(new FrigorificPanel());
-                    frame_update_delete_frigorific.setVisible(false);
+                    frame_update_delete_masina_de_spalat.setVisible(false);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }

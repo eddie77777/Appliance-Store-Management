@@ -2,6 +2,7 @@ package DataBase;
 
 import Models.Adresa;
 import Models.Frigorific;
+import Models.MasinaDeSpalat;
 import Models.Produs;
 
 import java.sql.ResultSet;
@@ -32,6 +33,17 @@ public class DBUtils {
         return adrese;
     }
 
+    public static Vector<MasinaDeSpalat> GetMasinaDeSpalat() throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.masina_de_spalat;");
+        Vector<MasinaDeSpalat> masiniSpalat = new Vector<>();
+        while(resultSet.next())
+        {
+            masiniSpalat.add(new MasinaDeSpalat(resultSet));
+        }
+        return masiniSpalat;
+    }
+
     public static Vector<Frigorific> GetFrigorifice() throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM public.frigorific;");
@@ -56,6 +68,14 @@ public class DBUtils {
                 + id_frigorific + ";");
         resultSet.next();
         return new Frigorific((resultSet));
+    }
+
+    public static MasinaDeSpalat GetMasinaDeSpalatForUpdateDelete(Integer id_masina_de_spalat) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.masina_de_spalat WHERE id_masina_de_spalat = "
+                + id_masina_de_spalat + ";");
+        resultSet.next();
+        return new MasinaDeSpalat((resultSet));
     }
 
     public static Produs GetProdusById(Integer id_produs) throws SQLException {
@@ -92,6 +112,13 @@ public class DBUtils {
         return true;
     }
 
+    public static boolean AdaugaMasinaDeSpalat(MasinaDeSpalat masinaDeSpalat) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate("INSERT INTO public.masina_de_spalat(id_produs, proprietati) VALUES ("
+                + masinaDeSpalat.getId_produs() + ", '" + masinaDeSpalat.getProprietati() + "');");
+        return true;
+    }
+
     public static void UpdateAdresa(Adresa adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         /*statement.executeUpdate(
@@ -121,6 +148,15 @@ public class DBUtils {
         );
     }
 
+    public static void UpdateMasinaDeSpalat(MasinaDeSpalat spalat) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "UPDATE public.masina_de_spalat SET proprietati = '" + spalat.getProprietati()  +
+                        "' , id_produs = " + spalat.getId_produs() +
+                        " WHERE id_masina_de_spalat = " + spalat.getId_masina_de_spalat() + ";"
+        );
+    }
+
 
 
    /* public static void UpdateProdusForAFrigorific(int id_friforific, int id_produs) throws SQLException {
@@ -142,6 +178,13 @@ public class DBUtils {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate(
                 "DELETE FROM frigorific WHERE id_frigorific = " + id_frigorific + ";"
+        );
+    }
+
+    public static void DeleteMasinaDeSpalat(int id_masina_de_spalat) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "DELETE FROM public.masina_de_spalat WHERE id_masina_de_spalat = " + id_masina_de_spalat + ";"
         );
     }
     public static Produs GetProdusForUpdateDelete(int id_produs) throws SQLException {
