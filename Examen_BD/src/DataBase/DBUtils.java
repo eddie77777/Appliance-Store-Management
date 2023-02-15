@@ -1,9 +1,6 @@
 package DataBase;
 
-import Models.Adresa;
-import Models.ElectrocasnicMic;
-import Models.Frigorific;
-import Models.Produs;
+import Models.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,6 +50,17 @@ public class DBUtils {
             electrocasnice.add(new ElectrocasnicMic(resultSet));
         }
         return electrocasnice;
+    }
+
+    public static Vector<MasinaDeGatit> GetMasiniDeGatit() throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.masina_de_gatit;");
+        Vector<MasinaDeGatit> masinaDeGatit = new Vector<>();
+        while(resultSet.next())
+        {
+            masinaDeGatit.add(new MasinaDeGatit(resultSet));
+        }
+        return  masinaDeGatit;
     }
 
     public static Adresa GetAdresaForUpdateDelete(Integer id_adresa) throws SQLException {
@@ -123,6 +131,13 @@ public class DBUtils {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate("INSERT INTO public.electrocasnic_mic(id_produs, proprietati) VALUES ("
                 + electrocasnicMic.getId_produs() + ", '" + electrocasnicMic.getProprietati() + "');");
+        return true;
+    }
+
+    public static boolean AdaugaMasinaDeGatit(MasinaDeGatit masinaDeGatit) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate("INSERT INTO public.masina_de_gatit(id_produs, proprietati) VALUES ("
+                + masinaDeGatit.getId_produs() + ", '" + masinaDeGatit.getProprietati() + "');");
         return true;
     }
 

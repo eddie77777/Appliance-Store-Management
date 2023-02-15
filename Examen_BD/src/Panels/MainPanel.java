@@ -92,5 +92,13 @@ public class MainPanel extends JPanel {
             }
         });
 
+        btnGatit.addActionListener(e -> {
+            try {
+                Main.changeCurrentPanel(new MasinaDeGatitPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }
