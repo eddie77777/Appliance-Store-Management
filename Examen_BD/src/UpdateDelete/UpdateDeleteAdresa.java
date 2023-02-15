@@ -32,7 +32,7 @@ public class UpdateDeleteAdresa extends  JFrame{
     public static JFrame frame_update_delete_adresa;
 
     public UpdateDeleteAdresa (int id_adresa) throws SQLException {
-        frame_update_delete_adresa = new JFrame("Adrese");
+        frame_update_delete_adresa = new JFrame("Edit Adresa");
         frame_update_delete_adresa.setSize(568, 568);
         frame_update_delete_adresa.setLocationRelativeTo(null);
         frame_update_delete_adresa.setVisible(true);

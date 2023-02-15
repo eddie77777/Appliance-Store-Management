@@ -12,18 +12,19 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Vector;
 
-public class UpdateDeleteFrigorific extends  JFrame{
+public class UpdateDeleteFrigorific extends JFrame{
     private JLabel lblIdProdus;
     private JComboBox comboBoxIdProdus;
     private JLabel lblProprietati;
-    private JTextField tfldProprietati;
+    private JTextArea textProprietati;
     private JButton modify;
     private JButton delete;
 
     public static JFrame frame_update_delete_frigorific;
 
     public UpdateDeleteFrigorific (int id_frigorific) throws SQLException {
-        frame_update_delete_frigorific = new JFrame("Frigorific");
+
+        frame_update_delete_frigorific = new JFrame("Edit frigorific");
         frame_update_delete_frigorific.setSize(568, 568);
         frame_update_delete_frigorific.setLocationRelativeTo(null);
         frame_update_delete_frigorific.setVisible(true);
@@ -33,8 +34,8 @@ public class UpdateDeleteFrigorific extends  JFrame{
         Vector<Produs> produse = DBUtils.GetProduse();
         comboBoxIdProdus = new JComboBox(produse);
         lblProprietati = new JLabel ("Proprietati:");
-        tfldProprietati = new JTextField (1);
-        tfldProprietati.setText(DBUtils.GetFrigorificForUpdateDelete(id_frigorific).getProprietati());
+        textProprietati = new JTextArea (5, 5);
+        textProprietati.setText(DBUtils.GetFrigorificForUpdateDelete(id_frigorific).getProprietati());
         modify = new JButton("Modificare");
         delete = new JButton("Stergere");
 
@@ -42,17 +43,17 @@ public class UpdateDeleteFrigorific extends  JFrame{
         //setPreferredSize (new Dimension(938, 568));
         //setLayout (null);
 
-        comboBoxIdProdus.setBounds (100, 67, 284, 35);
-        lblIdProdus.setBounds (184, 45, 200, 25);
-        lblProprietati.setBounds (100, 100, 284, 25);
-        tfldProprietati.setBounds (100, 120, 284, 25);
+        comboBoxIdProdus.setBounds (30, 67, 490, 35);
+        lblIdProdus.setBounds (30, 45, 200, 25);
+        lblProprietati.setBounds (30, 100, 284, 25);
+        textProprietati.setBounds (30, 120, 490, 100);
         modify.setBounds(50,400,100,60);
         delete.setBounds(418,400,100,60);
 
         frame_update_delete_frigorific.add (comboBoxIdProdus);
         frame_update_delete_frigorific.add (lblIdProdus);
         frame_update_delete_frigorific.add (lblProprietati);
-        frame_update_delete_frigorific.add (tfldProprietati);
+        frame_update_delete_frigorific.add (textProprietati);
         frame_update_delete_frigorific.add (modify);
         frame_update_delete_frigorific.add (delete);
 
@@ -88,7 +89,7 @@ public class UpdateDeleteFrigorific extends  JFrame{
                     Object selectedObj = comboBoxIdProdus.getSelectedItem();
                     Produs prd = (Produs) selectedObj;
                     frg.setId_produs(prd.getId_produs());
-                    frg.setProprietati(tfldProprietati.getText());
+                    frg.setProprietati(textProprietati.getText());
                     DBUtils.UpdateFrigorific(frg);
                     Main.changeCurrentPanel(new FrigorificPanel());
                     frame_update_delete_frigorific.setVisible(false);

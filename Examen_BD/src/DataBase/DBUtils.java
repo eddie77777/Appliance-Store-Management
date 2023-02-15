@@ -4,6 +4,7 @@ import Models.Adresa;
 import Models.Frigorific;
 import Models.MasinaDeSpalat;
 import Models.Produs;
+import Models.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,6 +56,28 @@ public class DBUtils {
         return frigorifice;
     }
 
+    public static Vector<ElectrocasnicMic> GetElectrocasnice() throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.electrocasnic_mic;");
+        Vector<ElectrocasnicMic> electrocasnice = new Vector<>();
+        while(resultSet.next())
+        {
+            electrocasnice.add(new ElectrocasnicMic(resultSet));
+        }
+        return electrocasnice;
+    }
+
+    public static Vector<MasinaDeGatit> GetMasiniDeGatit() throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.masina_de_gatit;");
+        Vector<MasinaDeGatit> masinaDeGatit = new Vector<>();
+        while(resultSet.next())
+        {
+            masinaDeGatit.add(new MasinaDeGatit(resultSet));
+        }
+        return  masinaDeGatit;
+    }
+
     public static Adresa GetAdresaForUpdateDelete(Integer id_adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM public.adresa WHERE id_adresa = " + id_adresa + ";");
@@ -77,6 +100,13 @@ public class DBUtils {
         resultSet.next();
         return new MasinaDeSpalat((resultSet));
     }
+    public static ElectrocasnicMic GetElectrocasnicForUpdateDelete(Integer id_electrocasnic) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.electrocasnic_mic WHERE id_electrocasnic_mic = "
+                + id_electrocasnic + ";");
+        resultSet.next();
+        return new ElectrocasnicMic((resultSet));
+    }
 
     public static Produs GetProdusById(Integer id_produs) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
@@ -86,6 +116,12 @@ public class DBUtils {
         return new Produs((resultSet));
     }
 
+    public static Produs GetProdusForUpdateDelete(int id_produs) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.produs WHERE id_produs = " + id_produs + ";");
+        resultSet.next();
+        return new Produs((resultSet));
+    }
     public static boolean AdaugaAdresa(Adresa adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate("INSERT INTO public.adresa(judet, localitate,strada, numar, bloc, scara, apartament) VALUES ('"
@@ -114,8 +150,22 @@ public class DBUtils {
 
     public static boolean AdaugaMasinaDeSpalat(MasinaDeSpalat masinaDeSpalat) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
-        statement.executeUpdate("INSERT INTO public.masina_de_spalat(id_produs, proprietati) VALUES ("
-                + masinaDeSpalat.getId_produs() + ", '" + masinaDeSpalat.getProprietati() + "');");
+        statement.executeUpdate("INSERT INTO public.masina_de_spalat(id_produs, proprietati) VALUES (" +
+                masinaDeSpalat.getId_produs() + ", '" + masinaDeSpalat.getProprietati() + "');");
+        return true;
+    }
+
+    public static boolean AdaugaElectrocasnic(ElectrocasnicMic electrocasnicMic) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate("INSERT INTO public.electrocasnic_mic(id_produs, proprietati) VALUES ("
+                + electrocasnicMic.getId_produs() + ", '" + electrocasnicMic.getProprietati() + "');");
+        return true;
+    }
+
+    public static boolean AdaugaMasinaDeGatit(MasinaDeGatit masinaDeGatit) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate("INSERT INTO public.masina_de_gatit(id_produs, proprietati) VALUES ("
+                + masinaDeGatit.getId_produs() + ", '" + masinaDeGatit.getProprietati() + "');");
         return true;
     }
 
@@ -159,6 +209,15 @@ public class DBUtils {
 
 
 
+    public static void UpdateElectrocasnic(ElectrocasnicMic electrocasnicMic) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "UPDATE public.electrocasnic_mic SET proprietati = '" + electrocasnicMic.getProprietati()  +
+                        "' , id_produs = " + electrocasnicMic.getId_produs() +
+                        " WHERE id_electrocasnic_mic = " + electrocasnicMic.getId_electrocasnic_mic() + ";"
+        );
+    }
+
    /* public static void UpdateProdusForAFrigorific(int id_friforific, int id_produs) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate(
@@ -174,6 +233,13 @@ public class DBUtils {
         );
     }
 
+    public static void DeleteElectrocasnic(int id_electrocasnic) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "DELETE FROM electrocasnic_mic WHERE id_electrocasnic_mic = " + id_electrocasnic + ";"
+        );
+    }
+
     public static void DeleteFrigorific(int id_frigorific) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate(
@@ -186,12 +252,6 @@ public class DBUtils {
         statement.executeUpdate(
                 "DELETE FROM public.masina_de_spalat WHERE id_masina_de_spalat = " + id_masina_de_spalat + ";"
         );
-    }
-    public static Produs GetProdusForUpdateDelete(int id_produs) throws SQLException {
-        Statement statement = DatabaseConnection.connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.produs WHERE id_produs = " + id_produs + ";");
-        resultSet.next();
-        return new Produs((resultSet));
     }
 
     public static void UpdateProdus(Produs produs) throws SQLException {

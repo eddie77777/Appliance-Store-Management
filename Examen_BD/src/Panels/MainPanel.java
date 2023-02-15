@@ -97,6 +97,22 @@ public class MainPanel extends JPanel {
             }
         });
 
+        btnElctrocasnic.addActionListener(e -> {
+            try {
+                Main.changeCurrentPanel(new ElectrocasnicMicPanel());
 
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        btnGatit.addActionListener(e -> {
+            try {
+                Main.changeCurrentPanel(new MasinaDeGatitPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }

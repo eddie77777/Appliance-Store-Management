@@ -1,15 +1,28 @@
 package Models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class MasinaDeGatit {
 
     private int id_masina_de_gatit;
     private int id_produs;
     private String proprietati;
 
-    public MasinaDeGatit(int id_masina_de_gatit, int id_produs, String proprietati) {
-        this.id_masina_de_gatit = id_masina_de_gatit;
+    public String toString() {
+        return  "id_frigorific: " + id_masina_de_gatit + "           " +
+                "id_produs: " + id_produs + "           " +
+                "prop: " + proprietati ;
+    }
+
+    public MasinaDeGatit(int id_produs, String proprietati) {
         this.id_produs = id_produs;
         this.proprietati = proprietati;
+    }
+    public MasinaDeGatit(ResultSet resultSet) throws SQLException {
+        this.id_masina_de_gatit = resultSet.getInt("id_masina_de_gatit");
+        this.id_produs = resultSet.getInt("id_produs");
+        this.proprietati = resultSet.getString("proprietati");
     }
 
     public int getId_masina_de_gatit() {

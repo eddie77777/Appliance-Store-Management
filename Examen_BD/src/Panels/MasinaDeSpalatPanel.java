@@ -66,13 +66,12 @@ public class MasinaDeSpalatPanel extends JPanel {
         add (lblIdProdus);
 
         //set component bounds (only needed by Absolute Positioning)
-        listaSpalat.setBounds (445, 0, 500, 574);
-        //ListaProduse.setBounds (445, 325, 500, 250);
+        listaSpalat.setBounds (490, 0, 460, 574);
         lblProprietati.setBounds (0, 135, 100, 25);
-        textProprietati.setBounds (0, 160, 200, 100);
+        textProprietati.setBounds (0, 160, 486, 100);
         btnBack.setBounds (0, 0, 50, 25);
-        btnAdaugare.setBounds (0, 335, 100, 25);
-        comboBoxIdProdus.setBounds (0, 110, 200, 25);
+        btnAdaugare.setBounds (193, 270, 100, 25);
+        comboBoxIdProdus.setBounds (0, 110, 486, 25);
         lblIdProdus.setBounds (0, 85, 100, 25);
 
         listaSpalat.addMouseListener(new MouseAdapter() {

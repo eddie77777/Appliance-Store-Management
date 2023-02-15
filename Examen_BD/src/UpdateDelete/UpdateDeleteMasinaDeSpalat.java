@@ -42,10 +42,10 @@ public class UpdateDeleteMasinaDeSpalat extends  JFrame{
         //setPreferredSize (new Dimension(938, 568));
         //setLayout (null);
 
-        comboBoxIdProdus.setBounds (100, 67, 284, 35);
-        lblIdProdus.setBounds (184, 45, 200, 25);
-        lblProprietati.setBounds (100, 100, 284, 25);
-        tfldProprietati.setBounds (100, 120, 284, 25);
+        comboBoxIdProdus.setBounds (30, 67, 490, 35);
+        lblIdProdus.setBounds (30, 45, 200, 25);
+        lblProprietati.setBounds (30, 100, 284, 25);
+        tfldProprietati.setBounds (30, 120, 490, 100);
         modify.setBounds(50,400,100,60);
         delete.setBounds(418,400,100,60);
 
