@@ -1,6 +1,7 @@
 package DataBase;
 
 import Models.Adresa;
+import Models.ElectrocasnicMic;
 import Models.Frigorific;
 import Models.Produs;
 
@@ -41,6 +42,17 @@ public class DBUtils {
             frigorifice.add(new Frigorific(resultSet));
         }
         return frigorifice;
+    }
+
+    public static Vector<ElectrocasnicMic> GetElectrocasnice() throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.electrocasnic_mic;");
+        Vector<ElectrocasnicMic> electrocasnice = new Vector<>();
+        while(resultSet.next())
+        {
+            electrocasnice.add(new ElectrocasnicMic(resultSet));
+        }
+        return electrocasnice;
     }
 
     public static Adresa GetAdresaForUpdateDelete(Integer id_adresa) throws SQLException {

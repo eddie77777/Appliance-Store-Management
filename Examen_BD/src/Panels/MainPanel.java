@@ -83,6 +83,14 @@ public class MainPanel extends JPanel {
             }
         });
 
+        btnElctrocasnic.addActionListener(e -> {
+            try {
+                Main.changeCurrentPanel(new ElectrocasnicMicPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
 
     }
 }
