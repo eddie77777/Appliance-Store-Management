@@ -70,6 +70,14 @@ public class DBUtils {
         return new Frigorific((resultSet));
     }
 
+    public static ElectrocasnicMic GetElectrocasnicForUpdateDelete(Integer id_electrocasnic) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.electrocasnic_mic WHERE id_electrocasnic_mic = "
+                + id_electrocasnic + ";");
+        resultSet.next();
+        return new ElectrocasnicMic((resultSet));
+    }
+
     public static Produs GetProdusById(Integer id_produs) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM public.produs WHERE id_produs =" +
@@ -78,6 +86,13 @@ public class DBUtils {
         return new Produs((resultSet));
     }
 
+
+    public static Produs GetProdusForUpdateDelete(int id_produs) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.produs WHERE id_produs = " + id_produs + ";");
+        resultSet.next();
+        return new Produs((resultSet));
+    }
     public static boolean AdaugaAdresa(Adresa adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate("INSERT INTO public.adresa(judet, localitate,strada, numar, bloc, scara, apartament) VALUES ('"
@@ -101,6 +116,13 @@ public class DBUtils {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate("INSERT INTO public.frigorific(id_produs, proprietati) VALUES ("
                 + frigorific.getId_produs() + ", '" + frigorific.getProprietati() + "');");
+        return true;
+    }
+
+    public static boolean AdaugaElectrocasnic(ElectrocasnicMic electrocasnicMic) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate("INSERT INTO public.electrocasnic_mic(id_produs, proprietati) VALUES ("
+                + electrocasnicMic.getId_produs() + ", '" + electrocasnicMic.getProprietati() + "');");
         return true;
     }
 
@@ -133,7 +155,14 @@ public class DBUtils {
         );
     }
 
-
+    public static void UpdateElectrocasnic(ElectrocasnicMic electrocasnicMic) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "UPDATE public.electrocasnic_mic SET proprietati = '" + electrocasnicMic.getProprietati()  +
+                        "' , id_produs = " + electrocasnicMic.getId_produs() +
+                        " WHERE id_electrocasnic_mic = " + electrocasnicMic.getId_electrocasnic_mic() + ";"
+        );
+    }
 
    /* public static void UpdateProdusForAFrigorific(int id_friforific, int id_produs) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
@@ -150,17 +179,18 @@ public class DBUtils {
         );
     }
 
+    public static void DeleteElectrocasnic(int id_electrocasnic) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "DELETE FROM electrocasnic_mic WHERE id_electrocasnic_mic = " + id_electrocasnic + ";"
+        );
+    }
+
     public static void DeleteFrigorific(int id_frigorific) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate(
                 "DELETE FROM frigorific WHERE id_frigorific = " + id_frigorific + ";"
         );
-    }
-    public static Produs GetProdusForUpdateDelete(int id_produs) throws SQLException {
-        Statement statement = DatabaseConnection.connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.produs WHERE id_produs = " + id_produs + ";");
-        resultSet.next();
-        return new Produs((resultSet));
     }
 
     public static void UpdateProdus(Produs produs) throws SQLException {

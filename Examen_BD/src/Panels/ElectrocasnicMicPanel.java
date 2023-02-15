@@ -1,9 +1,11 @@
 package Panels;
 
 import Main.Main;
+import Models.ElectrocasnicMic;
 import Models.Frigorific;
 import Models.Produs;
 import DataBase.DBUtils;
+import UpdateDelete.UpdateDeleteElectrocasnicMic;
 import UpdateDelete.UpdateDeleteFrigorific;
 
 import javax.swing.*;
@@ -78,11 +80,11 @@ public class ElectrocasnicMicPanel extends JPanel {
                 if (e.getClickCount() == 2) {
                     JList list = (JList) e.getSource();
                     Object selectedObj = list.getSelectedValue();
-                    if (selectedObj instanceof Frigorific) {
-                        Frigorific frigorificSelectat = (Frigorific) selectedObj;
-                        System.out.println(frigorificSelectat.getId_frigorific());
+                    if (selectedObj instanceof ElectrocasnicMic) {
+                        ElectrocasnicMic electrocasnicSelectat = (ElectrocasnicMic) selectedObj;
+                        System.out.println(electrocasnicSelectat.getId_electrocasnic_mic());
                         try {
-                            UpdateDeleteFrigorific udf = new UpdateDeleteFrigorific(frigorificSelectat.getId_frigorific());
+                            UpdateDeleteElectrocasnicMic ude = new UpdateDeleteElectrocasnicMic(electrocasnicSelectat.getId_electrocasnic_mic());
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -109,8 +111,8 @@ public class ElectrocasnicMicPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    DBUtils.AdaugaFrigorific(new Frigorific(produsSelectat.getId_produs(), textProprietati.getText()));
-                    listaElectrocasnice.setListData(DBUtils.GetFrigorifice());
+                    DBUtils.AdaugaElectrocasnic(new ElectrocasnicMic(produsSelectat.getId_produs(), textProprietati.getText()));
+                    listaElectrocasnice.setListData(DBUtils.GetElectrocasnice());
                     textProprietati.setText("");
                     comboBoxIdProdus.setSelectedItem(null);
                 } catch (SQLException ex) {

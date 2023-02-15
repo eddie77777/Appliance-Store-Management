@@ -15,8 +15,7 @@ public class ElectrocasnicMic {
                 "prop: " + proprietati ;
     }
 
-    public ElectrocasnicMic(int id_electrocasnic_mic, int id_produs, String proprietati) {
-        this.id_electrocasnic_mic = id_electrocasnic_mic;
+    public ElectrocasnicMic(int id_produs, String proprietati) {
         this.id_produs = id_produs;
         this.proprietati = proprietati;
     }
