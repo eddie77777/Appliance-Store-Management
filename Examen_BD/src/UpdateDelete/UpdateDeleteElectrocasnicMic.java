@@ -24,7 +24,7 @@ public class UpdateDeleteElectrocasnicMic extends JFrame{
         public static JFrame frame_update_delete_electrocsanic_mic;
 
         public UpdateDeleteElectrocasnicMic (int id_electrocasnic) throws SQLException {
-                frame_update_delete_electrocsanic_mic = new JFrame("Electrocasnice mici");
+                frame_update_delete_electrocsanic_mic = new JFrame("Edit electrocasnic");
                 frame_update_delete_electrocsanic_mic.setSize(568, 568);
                 frame_update_delete_electrocsanic_mic.setLocationRelativeTo(null);
                 frame_update_delete_electrocsanic_mic.setVisible(true);

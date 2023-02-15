@@ -26,7 +26,7 @@ public class UpdateDeleteProdus extends  JFrame{
 
     public UpdateDeleteProdus (int id_produs) throws SQLException {
 
-        frame_update_delete_produs = new JFrame("Adrese");
+        frame_update_delete_produs = new JFrame("Edit produs");
         frame_update_delete_produs.setSize(568, 568);
         frame_update_delete_produs.setLocationRelativeTo(null);
         frame_update_delete_produs.setVisible(true);

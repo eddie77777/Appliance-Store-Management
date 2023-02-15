@@ -23,7 +23,7 @@ public class UpdateDeleteFrigorific extends JFrame{
     public static JFrame frame_update_delete_frigorific;
 
     public UpdateDeleteFrigorific (int id_frigorific) throws SQLException {
-        frame_update_delete_frigorific = new JFrame("Frigorifice");
+        frame_update_delete_frigorific = new JFrame("Edit frigorific");
         frame_update_delete_frigorific.setSize(568, 568);
         frame_update_delete_frigorific.setLocationRelativeTo(null);
         frame_update_delete_frigorific.setVisible(true);
