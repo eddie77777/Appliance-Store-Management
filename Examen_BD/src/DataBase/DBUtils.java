@@ -100,6 +100,14 @@ public class DBUtils {
         resultSet.next();
         return new MasinaDeSpalat((resultSet));
     }
+
+    public static MasinaDeGatit GetMasinaDeGatitForUpdateDelete(Integer id_masina_de_gatit) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.masina_de_gatit WHERE id_masina_de_gatit = "
+                + id_masina_de_gatit + ";");
+        resultSet.next();
+        return new MasinaDeGatit((resultSet));
+    }
     public static ElectrocasnicMic GetElectrocasnicForUpdateDelete(Integer id_electrocasnic) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM public.electrocasnic_mic WHERE id_electrocasnic_mic = "
@@ -204,6 +212,15 @@ public class DBUtils {
                 "UPDATE public.masina_de_spalat SET proprietati = '" + spalat.getProprietati()  +
                         "' , id_produs = " + spalat.getId_produs() +
                         " WHERE id_masina_de_spalat = " + spalat.getId_masina_de_spalat() + ";"
+        );
+    }
+
+    public static void UpdateMasinaDeGatit(MasinaDeGatit gatit) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "UPDATE public.masina_de_gatit SET proprietati = '" + gatit.getProprietati()  +
+                        "' , id_produs = " + gatit.getId_produs() +
+                        " WHERE id_masina_de_gatit = " + gatit.getId_masina_de_gatit() + ";"
         );
     }
 

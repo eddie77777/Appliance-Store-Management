@@ -6,6 +6,7 @@ import Models.MasinaDeGatit;
 import Models.Produs;
 import DataBase.DBUtils;
 import UpdateDelete.UpdateDeleteElectrocasnicMic;
+import UpdateDelete.UpdateDeleteMasinaDeGatit;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,11 +83,11 @@ public class MasinaDeGatitPanel extends JPanel {
                     if (selectedObj instanceof MasinaDeGatit) {
                         MasinaDeGatit masinaSelectata = (MasinaDeGatit) selectedObj;
                         System.out.println(masinaSelectata.getId_masina_de_gatit());
-                       /* try {
-                            UpdateDeleteElectrocasnicMic ude = new UpdateDeleteElectrocasnicMic(masinaSelectata.getId_masina_de_gatit());
+                        try {
+                            UpdateDeleteMasinaDeGatit ude = new UpdateDeleteMasinaDeGatit(masinaSelectata.getId_masina_de_gatit());
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);
-                        }*/
+                        }
                     }
                 }
             }

@@ -10,7 +10,7 @@ public class MasinaDeGatit {
     private String proprietati;
 
     public String toString() {
-        return  "id_frigorific: " + id_masina_de_gatit + "           " +
+        return  "id_masina: " + id_masina_de_gatit + "           " +
                 "id_produs: " + id_produs + "           " +
                 "prop: " + proprietati ;
     }
