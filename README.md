@@ -9,13 +9,8 @@ Pasi de rulare:
 5. Restore la baza de date backupbd.sql din arhiva proiectului in pgAdmin 4
 6. Se realizeaza conexiunea cu aceasta baza de date cu ajutorul Tool-ului Database din IntelliJ, completand
 username-ul si parola din postgres.
-7. Se ruleaza aplicatia, utilizand operatiile disponibile pe tabelele din baza de date.
+7. Modificare user si parola in clasa DatabaseConnection.java setate in postgres.
+8. Se ruleaza aplicatia, utilizand operatiile disponibile pe tabelele din baza de date.
 
 Versiuni software utilizate:
 -IntelliJ IDEA 2022.3.1
-
-Conexiune cu baza de date:
--Import package java.sql
--postgresql
--pgAdmin 4
--driver postgresql-42.5.1.jar
