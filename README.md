@@ -5,7 +5,7 @@ Pasi de rulare:
 2. Instalare jdk -> 19 (Oracle OpenJDK version 19).
 3. Instalare domeniu postgresql impreuna cu IDE-ul pgAdmin4..
 4. Instalare driver postgresql-42.5.1.jar din arhiva proiectului.  (File -> Project Structure -> Modules -> 
--> Dependencies -> browse).
+-> Dependencies -> browse). // Sa pun link de la driver si sa il sterg din arhiva
 5. Restore la baza de date backupbd.sql din arhiva proiectului in pgAdmin 4
 6. Se realizeaza conexiunea cu aceasta baza de date cu ajutorul Tool-ului Database din IntelliJ, completand
 username-ul si parola din postgres. (development)
