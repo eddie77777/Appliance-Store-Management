@@ -2,11 +2,10 @@ package UpdateDelete;
 import DataBase.DBUtils;
 import Main.Main;
 import Models.MasinaDeGatit;
-import Models.MasinaDeSpalat;
+import Models.Persoana;
 import Models.Produs;
 import Panels.FrigorificPanel;
 import Panels.MasinaDeGatitPanel;
-import Panels.MasinaDeSpalatPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

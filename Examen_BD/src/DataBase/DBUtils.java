@@ -34,6 +34,17 @@ public class DBUtils {
         return adrese;
     }
 
+    public static Vector<Persoana> GetPersoane() throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.persoana;");
+        Vector<Persoana> persoana = new Vector<>();
+        while(resultSet.next())
+        {
+            persoana.add(new Persoana(resultSet));
+        }
+        return persoana;
+    }
+
     public static Vector<MasinaDeSpalat> GetMasinaDeSpalat() throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM public.masina_de_spalat;");
@@ -70,12 +81,12 @@ public class DBUtils {
     public static Vector<MasinaDeGatit> GetMasiniDeGatit() throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM public.masina_de_gatit;");
-        Vector<MasinaDeGatit> masinaDeGatit = new Vector<>();
+        Vector<MasinaDeGatit> creeazaCont = new Vector<>();
         while(resultSet.next())
         {
-            masinaDeGatit.add(new MasinaDeGatit(resultSet));
+            creeazaCont.add(new MasinaDeGatit(resultSet));
         }
-        return  masinaDeGatit;
+        return creeazaCont;
     }
 
     public static Adresa GetAdresaForUpdateDelete(Integer id_adresa) throws SQLException {
@@ -146,6 +157,14 @@ public class DBUtils {
         statement.executeUpdate("INSERT INTO public.produs(nume_produs,pret, stoc,specificatii) VALUES ('" +
                 produs.getNume_produs() + "', '" + produs.getPret() + "', '" + produs.getStoc() + "', '"
                 + produs.getSpecificatii() + "');");
+        return true;
+    }
+
+    public static boolean AdaugaPersoana(Persoana persoana) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate("INSERT INTO public.persoana(nume, prenume, id_adresa, email, nr_tel) " +
+                "VALUES ('" + persoana.getNume() + "', '" + persoana.getPrenume() + "', '" +
+                persoana.getId_adresa() + "', '" + persoana.getEmail() + "', '" + persoana.getNr_tel() + "');");
         return true;
     }
 

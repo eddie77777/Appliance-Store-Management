@@ -1,11 +1,10 @@
 package Panels;
 
 import Main.Main;
-import Models.ElectrocasnicMic;
 import Models.MasinaDeGatit;
+import Models.Persoana;
 import Models.Produs;
 import DataBase.DBUtils;
-import UpdateDelete.UpdateDeleteElectrocasnicMic;
 import UpdateDelete.UpdateDeleteMasinaDeGatit;
 
 import javax.swing.*;

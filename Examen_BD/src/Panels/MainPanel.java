@@ -20,6 +20,12 @@ public class MainPanel extends JPanel {
     private JButton btnElctrocasnic;
     private JButton btnGatit;
     private JButton btnSpalat;
+    private JButton btnLogin;
+
+    public static void infoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
 
     public  MainPanel ()
     {
@@ -35,6 +41,7 @@ public class MainPanel extends JPanel {
         btnElctrocasnic = new JButton("Electrocasnice mici");
         btnGatit = new JButton("Masini de gatit");
         btnSpalat = new JButton("Masini de spalat");
+        btnLogin = new JButton("Creeaza cont");
 
         //adjust size and set layout
         setPreferredSize (new Dimension (944, 574));
@@ -47,6 +54,7 @@ public class MainPanel extends JPanel {
         btnSpalat.setBounds(100,203,150,50);
         btnGatit.setBounds(100,316,150,50);
         btnElctrocasnic.setBounds(100,430,150,50);
+        btnLogin.setBounds(300,430,150,50);
         background.setBounds(0, 0, 944, 574);
 
         //add components
@@ -56,12 +64,22 @@ public class MainPanel extends JPanel {
         add (btnSpalat);
         add (btnElctrocasnic);
         add (btnGatit);
+        add (btnLogin);
         add (background);
 
         //activities
         btnAdresa.addActionListener(e -> {
             try {
                 Main.changeCurrentPanel(new AdresaPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        btnLogin.addActionListener(e -> {
+            try {
+                Main.changeCurrentPanel(new PersoanaPanel());
 
             } catch (Exception ex) {
                 ex.printStackTrace();
