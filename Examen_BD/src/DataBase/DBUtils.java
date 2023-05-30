@@ -6,6 +6,7 @@ import Models.MasinaDeSpalat;
 import Models.Produs;
 import Models.*;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -89,6 +90,17 @@ public class DBUtils {
         return creeazaCont;
     }
 
+    public static Vector<Comanda> GetComenzi() throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.comanda;");
+        Vector<Comanda> comenzi = new Vector<>();
+        while(resultSet.next())
+        {
+            comenzi.add(new Comanda(resultSet));
+        }
+        return comenzi;
+    }
+
     public static Adresa GetAdresaForUpdateDelete(Integer id_adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM public.adresa WHERE id_adresa = " + id_adresa + ";");
@@ -127,6 +139,14 @@ public class DBUtils {
         return new ElectrocasnicMic((resultSet));
     }
 
+    public static Comanda GetComandaForUpdateDelete(Integer id_comanda) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.comanda WHERE id_comanda = "
+                + id_comanda + ";");
+        resultSet.next();
+        return new Comanda(resultSet);
+    }
+
     public static Produs GetProdusById(Integer id_produs) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM public.produs WHERE id_produs =" +
@@ -141,6 +161,7 @@ public class DBUtils {
         resultSet.next();
         return new Produs((resultSet));
     }
+
     public static boolean AdaugaAdresa(Adresa adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate("INSERT INTO public.adresa(judet, localitate,strada, numar, bloc, scara, apartament) VALUES ('"
@@ -196,6 +217,17 @@ public class DBUtils {
         return true;
     }
 
+    public static boolean AdaugaComanda(Comanda comanda) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate("INSERT INTO public.comanda(id_persoana, id_adresa, data_plasare, " +
+                "data_livrare, cost_livrare, pret_total, metoda_plata, este_livrata) VALUES (" + comanda.getId_persoana()
+                + ", " + comanda.getId_adresa() +  ", '" + comanda.getData_plasare() +  "', '"
+                + comanda.getData_livrare() + "', " + comanda.getPret_total() + ", " + comanda.getCost_livrare()
+                + ", '" + comanda.getMetoda_plata() + "', " + comanda.getEste_livrata()+ ");");
+        return true;
+    }
+
+
     public static void UpdateAdresa(Adresa adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         /*statement.executeUpdate(
@@ -236,6 +268,8 @@ public class DBUtils {
 
     public static void UpdateMasinaDeGatit(MasinaDeGatit gatit) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
+        // ps = "SELECT * FROM ss Where id = ?1"
+        // ps.setParameter(1, id)
         statement.executeUpdate(
                 "UPDATE public.masina_de_gatit SET proprietati = '" + gatit.getProprietati()  +
                         "' , id_produs = " + gatit.getId_produs() +
@@ -305,5 +339,7 @@ public class DBUtils {
                 "DELETE FROM produs WHERE id_produs = " + id_produs + ";"
         );
     }
+
+
 
 }
