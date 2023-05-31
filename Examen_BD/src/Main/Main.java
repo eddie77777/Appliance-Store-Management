@@ -1,8 +1,10 @@
 package Main;
 
+import Panels.ComandaProdusPanel;
 import Panels.MainPanel;
 
 import javax.swing.*;
+import java.sql.SQLException;
 
 public class Main {
     static JFrame frame = new JFrame ("Altecs");
@@ -14,7 +16,7 @@ public class Main {
         frame.revalidate();
     }
 
-    public static void main (String[] args) {
+    public static void main (String[] args) throws SQLException {
         frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);

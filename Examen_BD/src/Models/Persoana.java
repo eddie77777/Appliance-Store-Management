@@ -13,12 +13,12 @@ public class Persoana {
     private String nr_tel;
 
     public String toString() {
-        return  "Cod: " + id_persoana + "           " +
-                "Nume: " + nume + "           " +
-                "Prenume: " + prenume + "           " +
-                "Cod adresa: " + id_adresa + "           " +
-                "Email: " + email + "           " +
-                "Nr tel: " + nr_tel;
+        return "cod: " + id_persoana + "      " +
+                "nume: " + nume + "      " +
+                "prenume: " + prenume + "      " +
+                "cod_a: " + id_adresa + "      " +
+                "email: " + email + "      " +
+                "nrTel: " + nr_tel;
     }
 
     public Persoana(String nume, String prenume, int id_adresa, String email, String nr_tel) {
@@ -28,6 +28,7 @@ public class Persoana {
         this.email = email;
         this.nr_tel = nr_tel;
     }
+
     public Persoana(ResultSet resultSet) throws SQLException {
         this.id_persoana = resultSet.getInt("id_persoana");
         this.nume = resultSet.getString("nume");
@@ -45,43 +46,35 @@ public class Persoana {
         this.id_persoana = id_persoana;
     }
 
-    public String getNume()
-    {
+    public String getNume() {
         return nume;
     }
 
-    public void setNume(String nume)
-    {
+    public void setNume(String nume) {
         this.nume = nume;
     }
 
-    public String getPrenume()
-    {
+    public String getPrenume() {
         return prenume;
     }
 
-    public void setPrenume(String prenume)
-    {
+    public void setPrenume(String prenume) {
         this.prenume = prenume;
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getNr_tel()
-    {
+    public String getNr_tel() {
         return nr_tel;
     }
 
-    public void setNr_tel(String nr_tel)
-    {
+    public void setNr_tel(String nr_tel) {
         this.nr_tel = nr_tel;
     }
 

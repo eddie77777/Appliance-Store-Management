@@ -17,6 +17,10 @@ import java.sql.SQLException;
 public class ProdusPanel extends JPanel {
     private JList listaProduse;
     private JButton btnAdaugare;
+    private JButton btnFrigorific;
+    private JButton btnMasinaDeGatit;
+    private JButton btnMasinaDeSpalat;
+    private JButton btnElectrocasnicMic;
     private JLabel lblNumeProdus;
     private JTextField tfldNumeProdus;
     private JLabel lblPret;
@@ -33,6 +37,10 @@ public class ProdusPanel extends JPanel {
         listaProduse = new JList(DBUtils.GetProduse());
 
         btnAdaugare = new JButton("Adaugare");
+        btnFrigorific = new JButton("Frigorific");
+        btnElectrocasnicMic = new JButton("Electrocasnic mic");
+        btnMasinaDeSpalat = new JButton("Masina de spalat");
+        btnMasinaDeGatit = new JButton("Masina de gatit");
         lblNumeProdus = new JLabel("Nume produs:");
         tfldNumeProdus = new JTextField(1);
         lblPret = new JLabel("Pret:");
@@ -50,6 +58,10 @@ public class ProdusPanel extends JPanel {
         //add components
         add(listaProduse);
         add(btnAdaugare);
+        add(btnElectrocasnicMic);
+        add(btnFrigorific);
+        add(btnMasinaDeGatit);
+        add(btnMasinaDeSpalat);
         add(lblNumeProdus);
         add(tfldNumeProdus);
         add(lblPret);
@@ -62,24 +74,91 @@ public class ProdusPanel extends JPanel {
 
         //set component bounds (only needed by Absolute Positioning)
         listaProduse.setBounds(240, 0, 700, 574);
-        btnAdaugare.setBounds(65, 405, 100, 25);
-        lblNumeProdus.setBounds(0, 55, 100, 25);
-        tfldNumeProdus.setBounds(0, 75, 200, 25);
-        lblPret.setBounds(0, 100, 100, 25);
-        tfldPret.setBounds(0, 120, 200, 25);
-        lblStoc.setBounds(0, 145, 100, 25);
-        tfldStoc.setBounds(0, 165, 200, 25);
-        lblSpecificatii.setBounds(0, 190, 100, 25);
-        tfldSpecificatii.setBounds(0, 210, 200, 25);
-        btnBack.setBounds(0, 0, 50, 25);
+        btnFrigorific.setBounds(10, 335, 200, 25);
+        btnElectrocasnicMic.setBounds(10, 375, 200, 25);
+        btnMasinaDeGatit.setBounds(10, 415, 200, 25);
+        btnMasinaDeSpalat.setBounds(10, 455, 200, 25);
+        btnAdaugare.setBounds(10, 250, 100, 25);
+        lblNumeProdus.setBounds(10, 55, 100, 25);
+        tfldNumeProdus.setBounds(10, 75, 200, 25);
+        lblPret.setBounds(10, 100, 100, 25);
+        tfldPret.setBounds(10, 120, 200, 25);
+        lblStoc.setBounds(10, 145, 100, 25);
+        tfldStoc.setBounds(10, 165, 200, 25);
+        lblSpecificatii.setBounds(10, 190, 100, 25);
+        tfldSpecificatii.setBounds(10, 210, 200, 25);
+        btnBack.setBounds(10, 0, 50, 25);
+
+        btnFrigorific.addActionListener(e -> {
+            try {
+                if(listaProduse.getModel().getSize() == 0)
+                {
+                    MainPanel.infoBox("Trebuie sa adaugati datele pentru un produs.", "Error");
+                    return;
+                }
+                Main.changeCurrentPanel(new FrigorificPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        btnElectrocasnicMic.addActionListener(e -> {
+            try {
+                if(listaProduse.getModel().getSize() == 0)
+                {
+                    MainPanel.infoBox("Trebuie sa adaugati datele pentru un produs.", "Error");
+                    return;
+                }
+                Main.changeCurrentPanel(new ElectrocasnicMicPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        btnMasinaDeGatit.addActionListener(e -> {
+            try {
+                if(listaProduse.getModel().getSize() == 0)
+                {
+                    MainPanel.infoBox("Trebuie sa adaugati datele pentru un produs.", "Error");
+                    return;
+                }
+                Main.changeCurrentPanel(new FrigorificPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        btnMasinaDeSpalat.addActionListener(e -> {
+            try {
+                if(listaProduse.getModel().getSize() == 0)
+                {
+                    MainPanel.infoBox("Trebuie sa adaugati datele pentru un produs.", "Error");
+                    return;
+                }
+                Main.changeCurrentPanel(new FrigorificPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
 
         //actions
         btnAdaugare.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    if (tfldNumeProdus.getText().isEmpty() || tfldNumeProdus.getText().isEmpty() ||
+                            tfldPret.getText().isEmpty() || tfldStoc.getText().isEmpty()
+                            || tfldSpecificatii.getText().isEmpty()) {
+                        MainPanel.infoBox("Un camp este necompletat.", "Error");
+                        return;
+                    }
+
                     DBUtils.AdaugaProdus(new Produs(tfldNumeProdus.getText(), Integer.parseInt(tfldPret.getText()),
-                            Integer.parseInt(tfldStoc.getText()),tfldSpecificatii.getText()));
+                            Integer.parseInt(tfldStoc.getText()), tfldSpecificatii.getText()));
                     listaProduse.setListData(DBUtils.GetProduse());
                     tfldNumeProdus.setText("");
                     tfldPret.setText("");

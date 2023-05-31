@@ -18,18 +18,18 @@ public class Comanda {
 
     @Override
     public String toString() {
-        return "id: " + id_comanda + "           " +
-                "id_persoana: " +id_persoana + "           " +
-                "id_adresa: " +id_adresa  + "           " +
-                "data_plasare: "+data_plasare  + "           " +
-                "data_livrare: "+data_livrare  + "           " +
-                "cost_livrare: "+cost_livrare  + "           " +
-                "pret_total: "+pret_total  + "           " +
-                "metoda_plata: "+metoda_plata  + "           " +
-                "este livrata: "+este_livrata;
+        return "nr: " + id_comanda + "      " +
+                "cod_p: " + id_persoana + "      " +
+                "cod_a: " + id_adresa + "      " +
+                "data_p: " + data_plasare + "      " +
+                "data_l: " + data_livrare + "      " +
+                "cost: " + cost_livrare + "      " +
+                "total: " + pret_total + "      " +
+                "metoda: " + metoda_plata + "      " +
+                "status: " + este_livrata;
     }
 
-    public Comanda( int id_persoana, int id_adresa, Date data_plasare, Date data_livrare, float cost_livrare, float pret_total, String metoda_plata, Boolean este_livrata) {
+    public Comanda(int id_persoana, int id_adresa, Date data_plasare, Date data_livrare, float cost_livrare, float pret_total, String metoda_plata, Boolean este_livrata) {
         this.id_persoana = id_persoana;
         this.id_adresa = id_adresa;
         this.data_plasare = data_plasare;
@@ -51,7 +51,6 @@ public class Comanda {
         this.metoda_plata = resultSet.getString("metoda_plata");
         this.este_livrata = resultSet.getBoolean("este_livrata");
     }
-
 
 
     public int getId_comanda() {

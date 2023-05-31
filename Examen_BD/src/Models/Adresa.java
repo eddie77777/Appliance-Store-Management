@@ -15,13 +15,13 @@ public class Adresa {
 
     @Override
     public String toString() {
-        return judet + "           " +
-                localitate + "             " +
-                strada + "             " +
-                numar + "             " +
-                bloc + "             " +
-                scara  + "             " +
-                apartament;
+        return "judet:" + judet + "      " +
+                "loc:" + localitate + "        " +
+                "str:" + strada + "        " +
+                "nr:" + numar + "        " +
+                "bloc:" + bloc + "        " +
+                "scara:" + scara + "        " +
+                "jud:" + apartament;
     }
 
     public Adresa(String judet, String localitate, String strada, int numar, int bloc, String scara, int apartament) {

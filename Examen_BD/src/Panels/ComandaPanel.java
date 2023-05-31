@@ -19,6 +19,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 
@@ -29,6 +31,7 @@ public class ComandaPanel extends JPanel{
     private JList listaComenzi;
     //YYYY-MM-DD
     private JButton btnAdaugare;
+    private JButton btnComandaProdus;
     private JLabel lblDataPlasare;
     private JTextField tfldDataPlasare;
     private JLabel lblDataLivrare;
@@ -42,8 +45,9 @@ public class ComandaPanel extends JPanel{
     private JLabel lblEsteLivrata;
     private JTextField tfldEsteLivrata;
     private JButton btnBack;
-
+    private JLabel lblIdPersoane;
     private JComboBox comboBoxIdPersoane;
+    private JLabel lblIdAdresa;
 
     private JComboBox comboBoxIdAdresa;
 
@@ -71,17 +75,22 @@ public class ComandaPanel extends JPanel{
         tfldEsteLivrata = new JTextField(1);
         btnAdaugare = new JButton("Adaugare");
         btnBack = new JButton("<<");
+        btnComandaProdus = new JButton("Alege produs");
         Vector<Adresa> adrese = DBUtils.GetAdrese();
         Vector<Persoana> persoane = DBUtils.GetPersoane();
+        lblIdPersoane = new JLabel("Persoana");
         comboBoxIdAdresa = new JComboBox(adrese);
+        lblIdAdresa = new JLabel("Adresa");
         comboBoxIdPersoane = new JComboBox(persoane);
         //adjust size and set layout
         setPreferredSize(new Dimension(1500, 568));
+        setSize(1500, 568);
         setLayout(null);
 
         //add components
         add(listaComenzi);
         add(btnAdaugare);
+        add(btnComandaProdus);
         add(lblDataPlasare);
         add(tfldDataPlasare);
         add(lblDataLivrare);
@@ -96,25 +105,30 @@ public class ComandaPanel extends JPanel{
         add(tfldEsteLivrata);
         add(comboBoxIdPersoane);
         add(comboBoxIdAdresa);
+        add(lblIdPersoane);
+        add(lblIdAdresa);
         add(btnBack);
 
         //set component bounds (only needed by Absolute Positioning)
-        listaComenzi.setBounds(490, 0, 1000, 574);
-        btnAdaugare.setBounds(65, 405, 100, 25);
-        lblDataPlasare.setBounds(0, 55, 200, 25);
-        tfldDataPlasare.setBounds(0, 75, 486, 25);
-        lblDataLivrare.setBounds(0, 100, 200, 25);
-        tfldDataLivrare.setBounds(0, 120, 486, 25);
-        lblCostLivrare.setBounds(0, 145, 100, 25);
-        tfldCostLivrare.setBounds(0, 165, 486, 25);
-        lblPretTotal.setBounds(0, 190, 100, 25);
-        tfldPretTotal.setBounds(0, 210, 486, 25);
-        lblMetodaPlata.setBounds(0, 235, 100, 25);
-        tfldMetodaPlata.setBounds(0, 255, 486, 25);
-        lblEsteLivrata.setBounds(0, 280, 100, 25);
-        tfldEsteLivrata.setBounds(0, 300, 486, 25);
-        comboBoxIdPersoane.setBounds(0, 330, 486, 25);
-        comboBoxIdAdresa.setBounds(0, 370, 486, 25);
+        listaComenzi.setBounds(275, 0, 1000, 375);
+        btnAdaugare.setBounds(65, 510, 100, 25);
+        btnComandaProdus.setBounds(430, 490, 200, 70);
+        lblDataPlasare.setBounds(0, 75, 200, 25);
+        tfldDataPlasare.setBounds(0, 95, 250, 25);
+        lblDataLivrare.setBounds(0, 120, 200, 25);
+        tfldDataLivrare.setBounds(0, 140, 250, 25);
+        lblCostLivrare.setBounds(0, 165, 100, 25);
+        tfldCostLivrare.setBounds(0, 185, 250, 25);
+        lblPretTotal.setBounds(0, 210, 100, 25);
+        tfldPretTotal.setBounds(0, 230, 250, 25);
+        lblMetodaPlata.setBounds(0, 255, 100, 25);
+        tfldMetodaPlata.setBounds(0, 275, 250, 25);
+        lblEsteLivrata.setBounds(0, 300, 100, 25);
+        tfldEsteLivrata.setBounds(0, 320, 250, 25);
+        lblIdPersoane.setBounds(0, 385, 100, 25);
+        comboBoxIdPersoane.setBounds(0, 405, 900, 25);
+        lblIdAdresa.setBounds(0, 430, 100, 25);
+        comboBoxIdAdresa.setBounds(0, 450, 900, 25);
         btnBack.setBounds(0, 0, 50, 25);
 
 
@@ -122,6 +136,20 @@ public class ComandaPanel extends JPanel{
         btnBack.addActionListener(e -> {
             try {
                 Main.changeCurrentPanel(new MainPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        btnComandaProdus.addActionListener(e -> {
+            try {
+                if(listaComenzi.getModel().getSize() == 0)
+                {
+                    MainPanel.infoBox("Trebuie sa adaugati o comanda.", "Error");
+                    return;
+                }
+                Main.changeCurrentPanel(new ComandaProdusPanel());
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -154,11 +182,39 @@ public class ComandaPanel extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+
+                    //VERIFICARE COMBOBOX
                     if(comboBoxIdPersoane.getSelectedItem()==null || comboBoxIdAdresa.getSelectedItem()==null)
                     {
                         MainPanel.infoBox("Nicio persoana selectata sau comanda selectata", "Error");
                         return;
                     }
+
+                    //VERIFICARE DATE
+                    String dataPlasareText = tfldDataPlasare.getText();
+                    String dataLivrareText = tfldDataLivrare.getText();
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    java.util.Date dataPlasare = null;
+                    java.util.Date dataLivrare = null;
+
+                    try {
+                        dataPlasare = dateFormat.parse(dataPlasareText);
+                        dataLivrare = dateFormat.parse(dataLivrareText);
+                    } catch (ParseException ex) {
+                        MainPanel.infoBox("Data plasare sau data livrare in format nevalid", "Error");
+                        return;
+                    }
+
+                    //VERIFICARE TEXTFIELDS
+                    if (tfldCostLivrare.getText().isEmpty() || tfldPretTotal.getText().isEmpty() ||
+                            tfldEsteLivrata.getText().isEmpty() || tfldMetodaPlata.getText().isEmpty()) {
+                        MainPanel.infoBox("Un camp este necompletat.", "Error");
+                        return;
+                    }
+
+
+                    //CREARE NOUA COMANDA SI ADAUGARE IN BAZA DE DATE
                     DBUtils.AdaugaComanda(
                             new Comanda(persoanaSelectata.getId_persoana(), 
                                     adresaSelectata.getId_adresa(), 

@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 public class ElectrocasnicMicPanel extends JPanel {
@@ -35,44 +37,44 @@ public class ElectrocasnicMicPanel extends JPanel {
 
     public ElectrocasnicMicPanel() throws SQLException {
         //construct components
-        listaElectrocasnice = new JList (DBUtils.GetElectrocasnice());
+        listaElectrocasnice = new JList(DBUtils.GetElectrocasnice());
         //ListaProduse = new JList (DBUtils.GetProduse());
-        lblidProdus = new JLabel ("id_Produs:");
-        tfldid_produs = new JTextField (1);
-        lblProprietati = new JLabel ("Proprietati:");
-        textProprietati = new JTextArea (5, 5);
-        btnBack = new JButton ("<<");
-        btnAdaugare = new JButton ("Adaugare");
-        lblIdProdus = new JLabel ("Produs:");
+        lblidProdus = new JLabel("id_Produs:");
+        tfldid_produs = new JTextField(1);
+        lblProprietati = new JLabel("Proprietati:");
+        textProprietati = new JTextArea(5, 5);
+        btnBack = new JButton("<<");
+        btnAdaugare = new JButton("Adaugare");
+        lblIdProdus = new JLabel("Produs:");
         Vector<Produs> produse = DBUtils.GetProduse();
         comboBoxIdProdus = new JComboBox(produse);
 
 
         //adjust size and set layout
-        setPreferredSize (new Dimension(944, 574));
-        setLayout (null);
+        setPreferredSize(new Dimension(944, 574));
+        setLayout(null);
 
         //add components
-        add (listaElectrocasnice);
+        add(listaElectrocasnice);
         //add (ListaProduse);
-        add (lblidProdus);
-        add (tfldid_produs);
-        add (lblProprietati);
-        add (textProprietati);
-        add (btnBack);
-        add (btnAdaugare);
-        add (comboBoxIdProdus);
-        add (lblIdProdus);
+        add(lblidProdus);
+        add(tfldid_produs);
+        add(lblProprietati);
+        add(textProprietati);
+        add(btnBack);
+        add(btnAdaugare);
+        add(comboBoxIdProdus);
+        add(lblIdProdus);
 
         //set component bounds (only needed by Absolute Positioning)
-        listaElectrocasnice.setBounds (490, 0, 460, 574);
+        listaElectrocasnice.setBounds(490, 0, 460, 574);
         //ListaProduse.setBounds (445, 325, 500, 250);
-        lblProprietati.setBounds (0, 135, 100, 25);
-        textProprietati.setBounds (0, 160, 486, 100);
-        btnBack.setBounds (0, 0, 50, 25);
-        btnAdaugare.setBounds (193, 270, 100, 25);
-        comboBoxIdProdus.setBounds (0, 110, 486, 25);
-        lblIdProdus.setBounds (0, 85, 100, 25);
+        lblProprietati.setBounds(0, 135, 100, 25);
+        textProprietati.setBounds(0, 160, 486, 100);
+        btnBack.setBounds(0, 0, 50, 25);
+        btnAdaugare.setBounds(193, 270, 100, 25);
+        comboBoxIdProdus.setBounds(0, 110, 486, 25);
+        lblIdProdus.setBounds(0, 85, 100, 25);
 
         listaElectrocasnice.addMouseListener(new MouseAdapter() {
             @Override
@@ -96,12 +98,9 @@ public class ElectrocasnicMicPanel extends JPanel {
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try
-                {
-                    Main.changeCurrentPanel(new MainPanel());
-                }
-                catch (Exception ex)
-                {
+                try {
+                    Main.changeCurrentPanel(new ProdusPanel());
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
@@ -111,6 +110,16 @@ public class ElectrocasnicMicPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    if (comboBoxIdProdus.getSelectedItem() == null) {
+                        MainPanel.infoBox("Niciun produs selectat.", "Error");
+                        return;
+                    }
+
+                    //VERIFICARE TEXTFIELDS
+                    if (textProprietati.getText().isEmpty()) {
+                        MainPanel.infoBox("Un camp este necompletat.", "Error");
+                        return;
+                    }
                     DBUtils.AdaugaElectrocasnic(new ElectrocasnicMic(produsSelectat.getId_produs(), textProprietati.getText()));
                     listaElectrocasnice.setListData(DBUtils.GetElectrocasnice());
                     textProprietati.setText("");

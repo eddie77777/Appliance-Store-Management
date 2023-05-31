@@ -10,15 +10,16 @@ public class MasinaDeGatit {
     private String proprietati;
 
     public String toString() {
-        return  "Cod: " + id_masina_de_gatit + "           " +
-                "Cod produs: " + id_produs + "           " +
-                "Prop: " + proprietati;
+        return "cod: " + id_masina_de_gatit + "           " +
+                "cod_pr: " + id_produs + "           " +
+                "prop: " + proprietati;
     }
 
     public MasinaDeGatit(int id_produs, String proprietati) {
         this.id_produs = id_produs;
         this.proprietati = proprietati;
     }
+
     public MasinaDeGatit(ResultSet resultSet) throws SQLException {
         this.id_masina_de_gatit = resultSet.getInt("id_masina_de_gatit");
         this.id_produs = resultSet.getInt("id_produs");

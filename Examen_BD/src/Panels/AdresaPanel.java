@@ -12,11 +12,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class AdresaPanel extends JPanel{
 
     private JList listaAdrese;
     private JButton btnAdaugare;
+    private JButton btnDatePersonale;
     private JLabel lblJudet;
     private JTextField tfldJudet;
     private JLabel lblLocalitate;
@@ -54,6 +57,7 @@ public class AdresaPanel extends JPanel{
         tfldApartament = new JTextField (1);
         btnAdaugare = new JButton ("Adaugare");
         btnBack = new JButton ("<<");
+        btnDatePersonale = new JButton("Completeaza date personale");
 
         //adjust size and set layout
         setPreferredSize (new Dimension(938, 568));
@@ -77,25 +81,27 @@ public class AdresaPanel extends JPanel{
         add (lblApartament);
         add (tfldApartament);
         add (btnBack);
+        add (btnDatePersonale);
 
         //set component bounds (only needed by Absolute Positioning)
         listaAdrese.setBounds (240, 0, 700, 574);
-        btnAdaugare.setBounds (65, 405, 100, 25);
-        lblJudet.setBounds (0, 55, 100, 25);
-        tfldJudet.setBounds (0, 75, 200, 25);
-        lblLocalitate.setBounds (0, 100, 100, 25);
-        tfldLocalitate.setBounds (0, 120, 200, 25);
-        lblStrada.setBounds (0, 145, 100, 25);
-        tfldStrada.setBounds (0, 165, 200, 25);
-        lblNumar.setBounds (0, 190, 100, 25);
-        tfldNumar.setBounds (0, 210, 200, 25);
-        lblBloc.setBounds (0, 235, 100, 25);
-        tfldBloc.setBounds (0, 255, 200, 25);
-        lblScara.setBounds (0, 280, 100, 25);
-        tfldScara.setBounds (0, 300, 200, 25);
-        lblApartament.setBounds (0, 325, 100, 25);
-        tfldApartament.setBounds (0, 345, 200, 25);
-        btnBack.setBounds (0, 0, 50, 25);
+        btnAdaugare.setBounds (55, 390, 100, 25);
+        lblJudet.setBounds (10, 55, 100, 25);
+        tfldJudet.setBounds (10, 75, 200, 25);
+        lblLocalitate.setBounds (10, 100, 100, 25);
+        tfldLocalitate.setBounds (10, 120, 200, 25);
+        lblStrada.setBounds (10, 145, 100, 25);
+        tfldStrada.setBounds (10, 165, 200, 25);
+        lblNumar.setBounds (10, 190, 100, 25);
+        tfldNumar.setBounds (10, 210, 200, 25);
+        lblBloc.setBounds (10, 235, 100, 25);
+        tfldBloc.setBounds (10, 255, 200, 25);
+        lblScara.setBounds (10, 280, 100, 25);
+        tfldScara.setBounds (10, 300, 200, 25);
+        lblApartament.setBounds (10, 325, 100, 25);
+        tfldApartament.setBounds (10, 345, 200, 25);
+        btnBack.setBounds (10, 0, 50, 25);
+        btnDatePersonale.setBounds (10, 450, 200, 70);
 
         //actions
         btnBack.addActionListener(e -> {
@@ -107,10 +113,34 @@ public class AdresaPanel extends JPanel{
             }
         });
 
+        btnDatePersonale.addActionListener(e -> {
+            try {
+                if(listaAdrese.getModel().getSize() == 0)
+                {
+                    MainPanel.infoBox("Trebuie sa va adaugati adresa de livrare.", "Error");
+                    return;
+                }
+                Main.changeCurrentPanel(new PersoanaPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
         btnAdaugare.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    //VERIFICARE TEXTFIELDS
+                    if (tfldJudet.getText().isEmpty() || tfldJudet.getText().isEmpty() ||
+                            tfldLocalitate.getText().isEmpty() || tfldStrada.getText().isEmpty()
+                            || tfldNumar.getText().isEmpty() || tfldBloc.getText().isEmpty() || tfldScara.getText().isEmpty()
+                            || tfldApartament.getText().isEmpty()) {
+                        MainPanel.infoBox("Un camp este necompletat.", "Error");
+                        return;
+                    }
+
+                    //ADAUGARE ADRESA
                     DBUtils.AdaugaAdresa(new Adresa(tfldJudet.getText(), tfldLocalitate.getText(), tfldStrada.getText(),
                             Integer.parseInt(tfldNumar.getText()),Integer.parseInt(tfldBloc.getText()) ,
                             tfldScara.getText(), Integer.parseInt(tfldApartament.getText())));

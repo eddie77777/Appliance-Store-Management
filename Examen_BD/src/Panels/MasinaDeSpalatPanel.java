@@ -98,7 +98,7 @@ public class MasinaDeSpalatPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try
                 {
-                    Main.changeCurrentPanel(new MainPanel());
+                    Main.changeCurrentPanel(new ProdusPanel());
                 }
                 catch (Exception ex)
                 {
@@ -111,6 +111,18 @@ public class MasinaDeSpalatPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    if(comboBoxIdProdus.getSelectedItem()==null)
+                    {
+                        MainPanel.infoBox("Niciun produs selectat.", "Error");
+                        return;
+                    }
+
+                    //VERIFICARE TEXTFIELDS
+                    if(textProprietati.getText().isEmpty() )
+                    {
+                        MainPanel.infoBox("Un camp este necompletat.", "Error");
+                        return;
+                    }
                     DBUtils.AdaugaMasinaDeSpalat(new MasinaDeSpalat(produsSelectat.getId_produs(), textProprietati.getText()));
                     listaSpalat.setListData(DBUtils.GetMasinaDeSpalat());
                     textProprietati.setText("");

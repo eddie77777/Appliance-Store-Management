@@ -10,9 +10,9 @@ public class ElectrocasnicMic {
     private String proprietati;
 
     public String toString() {
-        return  "id_electrocasnic: " + id_electrocasnic_mic + "           " +
-                "id_produs: " + id_produs + "           " +
-                "prop: " + proprietati ;
+        return "cod: " + id_electrocasnic_mic + "           " +
+                "cod_pr: " + id_produs + "           " +
+                "prop: " + proprietati;
     }
 
     public ElectrocasnicMic(int id_produs, String proprietati) {

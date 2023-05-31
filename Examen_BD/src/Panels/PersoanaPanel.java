@@ -3,6 +3,7 @@ package Panels;
 import DataBase.DBUtils;
 import Main.Main;
 import Models.Adresa;
+import Models.Comanda;
 import Models.Persoana;
 import Models.Produs;
 import UpdateDelete.UpdateDeleteAdresa;
@@ -21,6 +22,7 @@ import java.util.Vector;
 public class PersoanaPanel extends JPanel {
     private JList listaPersoane;
     private JButton btnAdaugare;
+    private JButton btnComanda;
     private JLabel lblNume;
     private JTextField tfldNume;
     private JLabel lblPrenume;
@@ -30,11 +32,10 @@ public class PersoanaPanel extends JPanel {
     private JLabel lblNumar;
     private JTextField tfldNumar;
     private JButton btnBack;
-
+    private JLabel lblAdresa;
     private JComboBox comboBoxIdAdresa;
 
     Adresa adresaSelectata;
-
 
 
     public PersoanaPanel() throws SQLException {
@@ -51,11 +52,13 @@ public class PersoanaPanel extends JPanel {
         lblNumar = new JLabel("Numar:");
         tfldNumar = new JTextField(1);
         btnAdaugare = new JButton("Adaugare");
+        btnComanda = new JButton("Finalizeaza datele comenzii");
+        lblAdresa = new JLabel("Adresa de livrare:");
         btnBack = new JButton("<<");
         Vector<Adresa> adrese = DBUtils.GetAdrese();
         comboBoxIdAdresa = new JComboBox(adrese);
         //adjust size and set layout
-        setPreferredSize(new Dimension(938, 568));
+        setPreferredSize(new Dimension(938, 400));
         setLayout(null);
 
         //add components
@@ -69,28 +72,47 @@ public class PersoanaPanel extends JPanel {
         add(tfldEmail);
         add(lblNumar);
         add(tfldNumar);
+        add(lblAdresa);
+        add(btnComanda);
         add(comboBoxIdAdresa);
         add(btnBack);
 
         //set component bounds (only needed by Absolute Positioning)
-        listaPersoane.setBounds(490, 0, 460, 574);
-        btnAdaugare.setBounds(65, 405, 100, 25);
-        lblNume.setBounds(0, 55, 100, 25);
-        tfldNume.setBounds(0, 75, 486, 25);
-        lblPrenume.setBounds(0, 100, 100, 25);
-        tfldPrenume.setBounds(0, 120, 486, 25);
-        lblEmail.setBounds(0, 145, 100, 25);
-        tfldEmail.setBounds(0, 165, 486, 25);
-        lblNumar.setBounds(0, 190, 100, 25);
-        tfldNumar.setBounds(0, 210, 486, 25);
-        comboBoxIdAdresa.setBounds(0, 235, 486, 25);
+        listaPersoane.setBounds(490, 0, 460, 270);
+        btnAdaugare.setBounds(250, 345, 375, 25);
+
+        lblNume.setBounds(0, 105, 100, 25);
+        tfldNume.setBounds(0, 125, 486, 25);
+        lblPrenume.setBounds(0, 150, 100, 25);
+        tfldPrenume.setBounds(0, 170, 486, 25);
+        lblEmail.setBounds(0, 195, 100, 25);
+        tfldEmail.setBounds(0, 215, 486, 25);
+        lblNumar.setBounds(0, 240, 100, 25);
+        tfldNumar.setBounds(0, 260, 486, 25);
+        lblAdresa.setBounds(0, 285, 100, 25);
+        btnComanda.setBounds(250, 375, 375, 70);
+        comboBoxIdAdresa.setBounds(0, 305, 900, 25);
         btnBack.setBounds(0, 0, 50, 25);
 
 
         //actions
         btnBack.addActionListener(e -> {
             try {
-                Main.changeCurrentPanel(new MainPanel());
+                Main.changeCurrentPanel(new AdresaPanel());
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        btnComanda.addActionListener(e -> {
+            try {
+                if(listaPersoane.getModel().getSize() == 0)
+                {
+                    MainPanel.infoBox("Trebuie sa va adaugati datele personale.", "Error");
+                    return;
+                }
+                Main.changeCurrentPanel(new ComandaPanel());
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -113,18 +135,24 @@ public class PersoanaPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if(comboBoxIdAdresa.getSelectedItem()==null)
-                    {
+                    if (comboBoxIdAdresa.getSelectedItem() == null) {
                         MainPanel.infoBox("Nicio adresa selectata.", "Error");
                         return;
                     }
-                    DBUtils.AdaugaPersoana(new Persoana(tfldNume.getText(), tfldPrenume.getText(), adresaSelectata.getId_adresa() ,tfldEmail.getText(),
+
+                    if (tfldNume.getText().isEmpty() || tfldPrenume.getText().isEmpty() ||
+                            tfldNumar.getText().isEmpty() || tfldEmail.getText().isEmpty()) {
+                        MainPanel.infoBox("Un camp este necompletat.", "Error");
+                        return;
+                    }
+                    DBUtils.AdaugaPersoana(new Persoana(tfldNume.getText(), tfldPrenume.getText(), adresaSelectata.getId_adresa(), tfldEmail.getText(),
                             tfldNumar.getText()));
                     listaPersoane.setListData(DBUtils.GetPersoane());
                     tfldNume.setText("");
                     tfldPrenume.setText("");
                     tfldEmail.setText("");
                     tfldNumar.setText("");
+                    comboBoxIdAdresa.setSelectedItem(null);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -140,7 +168,11 @@ public class PersoanaPanel extends JPanel {
                     if (selectedObj instanceof Persoana) {
                         Persoana persoanaSelectataLista = (Persoana) selectedObj;
                         System.out.println(persoanaSelectataLista.getId_persoana());
-                        UpdateDeletePersoana udprs = new UpdateDeletePersoana(persoanaSelectataLista.getId_persoana());
+                        try {
+                            UpdateDeletePersoana udprs = new UpdateDeletePersoana(persoanaSelectataLista.getId_persoana());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
             }

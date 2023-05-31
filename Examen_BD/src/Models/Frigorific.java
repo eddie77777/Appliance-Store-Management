@@ -10,9 +10,9 @@ public class Frigorific {
 
     @Override
     public String toString() {
-        return  "id_frigorific: " + id_frigorific + "           " +
-                "id_produs: " + id_produs + "           " +
-                "prop: " + proprietati ;
+        return "cod: " + id_frigorific + "           " +
+                "cod_pr: " + id_produs + "           " +
+                "prop: " + proprietati;
     }
 
     public Frigorific(int id_produs, String proprietati) {

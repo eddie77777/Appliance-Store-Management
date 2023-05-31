@@ -230,21 +230,24 @@ public class DBUtils {
 
     public static void UpdateAdresa(Adresa adresa) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
-        /*statement.executeUpdate(
-                "UPDATE public.adresa SET judet = '" + adresa.getJudet()  + "' WHERE id_adresa = " + adresa.getId_adresa() + ";" +
-                        "UPDATE public.adresa SET localitate = '" + adresa.getLocalitate()  + "' WHERE id_adresa = " + adresa.getId_adresa() + ";" +
-                        "UPDATE public.adresa SET strada = '" + adresa.getStrada()  + "' WHERE id_adresa = " + adresa.getId_adresa() + ";" +
-                        "UPDATE public.adresa SET numar = " + adresa.getNumar()  + " WHERE id_adresa = " + adresa.getId_adresa() + ";" +
-                        "UPDATE public.adresa SET bloc = " + adresa.getBloc()  + " WHERE id_adresa = " + adresa.getId_adresa() + ";" +
-                        "UPDATE public.adresa SET scara = '" + adresa.getScara()  + "' WHERE id_adresa = " + adresa.getId_adresa() + ";" +
-                        "UPDATE public.adresa SET apartament = " + adresa.getApartament()  + " WHERE id_adresa = " + adresa.getId_adresa() + ";"
-        );*/
         statement.executeUpdate(
                 "UPDATE public.adresa SET judet = '" + adresa.getJudet()  + "' ,localitate = '" + adresa.getLocalitate()  +
                         "' ,strada = '" + adresa.getStrada() + "' ,numar = " + adresa.getNumar() +
                         " ,bloc = " + adresa.getBloc() + " ,scara = '" + adresa.getScara() + "' " +
                         " ,apartament = " + adresa.getApartament() +
                         " WHERE id_adresa = " + adresa.getId_adresa() + ";"
+        );
+    }
+
+    public static void UpdateComanda(Comanda comanda) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "UPDATE public.comanda SET id_persoana = " + comanda.getId_persoana()  + " ,id_adresa = " +
+                        comanda.getId_adresa()  +  " ,data_plasare = '" + comanda.getData_plasare() + "' ,data_livrare = '"
+                        + comanda.getData_livrare() + "' ,cost_livrare = " + comanda.getCost_livrare() + " ,pret_total = "
+                        + comanda.getPret_total() + " " +  " ,metoda_plata = '" + comanda.getMetoda_plata() +
+                        "' ,este_livrata = " + comanda.getEste_livrata() +
+                        " WHERE id_comanda = " + comanda.getId_comanda() + ";"
         );
     }
 
@@ -303,6 +306,20 @@ public class DBUtils {
         );
     }
 
+    public static void DeleteComandaProdus(int id_comanda_produs) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "DELETE FROM comanda_produs WHERE id_comanda_produs = " + id_comanda_produs + ";"
+        );
+    }
+
+    public static void DeleteComanda(int id_comanda) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "DELETE FROM comanda WHERE id_comanda = " + id_comanda + ";"
+        );
+    }
+
     public static void DeleteElectrocasnic(int id_electrocasnic) throws SQLException {
         Statement statement = DatabaseConnection.connection.createStatement();
         statement.executeUpdate(
@@ -340,6 +357,46 @@ public class DBUtils {
         );
     }
 
+    public static Persoana GetPersoanaForUpdateDelete(int id_persoana) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.persoana WHERE id_persoana = " + id_persoana + ";");
+        resultSet.next();
+        return new Persoana(resultSet);
+    }
 
+    public static void UpdatePersoana(Persoana persoana) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "UPDATE public.persoana SET nume = '" + persoana.getNume()  +
+                        "' , prenume = '" + persoana.getPrenume() + "' , id_adresa = " + persoana.getId_adresa() +
+                        ", email = '" + persoana.getEmail() +"' , nr_tel = '" + persoana.getNr_tel() +
+                        "' WHERE id_persoana = " + persoana.getId_persoana() + ";"
+        );
+    }
+
+    public static void DeletePersoana(int id_persoana) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate(
+                "DELETE FROM persoana WHERE id_persoana = " + id_persoana + ";"
+        );
+    }
+
+    public static boolean AdaugaComandaProdus(ComandaProdus comandaProdus) throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        statement.executeUpdate("INSERT INTO public.comanda_produs(id_comanda, id_produs) " +
+                "VALUES (" + comandaProdus.getId_comanda() + ", " + comandaProdus.getId_produs() + ");");
+        return true;
+    }
+
+    public static Vector<ComandaProdus> GetComandaProdus() throws SQLException {
+        Statement statement = DatabaseConnection.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM public.comanda_produs;");
+        Vector<ComandaProdus> comenziPlasate = new Vector<>();
+        while(resultSet.next())
+        {
+            comenziPlasate.add(new ComandaProdus(resultSet));
+        }
+        return comenziPlasate;
+    }
 
 }

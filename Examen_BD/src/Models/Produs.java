@@ -12,7 +12,7 @@ public class Produs {
 
     @Override
     public String toString() {
-        return "id: " + id_produs + "           " +
+        return "cod: " + id_produs + "           " +
                 "Nume: " + nume_produs + "           " +
                 "Pret: " + pret + "             " +
                 "Stoc: " + stoc + "             " +

@@ -97,7 +97,7 @@ public class FrigorificPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try
                 {
-                    Main.changeCurrentPanel(new MainPanel());
+                    Main.changeCurrentPanel(new ProdusPanel());
                 }
                 catch (Exception ex)
                 {
@@ -110,6 +110,17 @@ public class FrigorificPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    if (comboBoxIdProdus.getSelectedItem() == null) {
+                        MainPanel.infoBox("Niciun produs selectat.", "Error");
+                        return;
+                    }
+
+                    //VERIFICARE TEXTFIELDS
+                    if (textProprietati.getText().isEmpty()) {
+                        MainPanel.infoBox("Un camp este necompletat.", "Error");
+                        return;
+                    }
+
                     DBUtils.AdaugaFrigorific(new Frigorific(produsSelectat.getId_produs(), textProprietati.getText()));
                     listaFrogrifice.setListData(DBUtils.GetFrigorifice());
                     textProprietati.setText("");

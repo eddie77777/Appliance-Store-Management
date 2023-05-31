@@ -10,9 +10,9 @@ public class MasinaDeSpalat {
     private String proprietati;
 
     public String toString() {
-        return  "id_masina: " + id_masina_de_spalat + "           " +
-                "id_produs: " + id_produs + "           " +
-                "prop: " + proprietati ;
+        return "cod: " + id_masina_de_spalat + "           " +
+                "cod_pr: " + id_produs + "           " +
+                "prop: " + proprietati;
     }
 
     public MasinaDeSpalat(int id_produs, String proprietati) {

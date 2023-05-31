@@ -5,6 +5,7 @@ import Models.Frigorific;
 import Models.Produs;
 import Panels.AdresaPanel;
 import Panels.FrigorificPanel;
+import Panels.MainPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -65,26 +66,23 @@ public class UpdateDeleteFrigorific extends JFrame{
                     index = i;
         comboBoxIdProdus.setSelectedItem(produse.get(index));
 
-        //inceput de modificare, e inutil acum
-       /* comboBoxIdProdus.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Object selectedObj = comboBoxIdProdus.getSelectedItem();
-                if (selectedObj instanceof Produs) {
-                    Produs produsSelectat = (Produs) selectedObj;
-                    try {
-                        DBUtils.UpdateProdusForAFrigorific(id_frigorific, produsSelectat.getId_produs());
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            }
-        });*/
 
         modify.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    if(comboBoxIdProdus.getSelectedItem()==null)
+                    {
+                        MainPanel.infoBox("Niciun produs selectat.", "Error");
+                        return;
+                    }
+
+                    //VERIFICARE TEXTFIELDS
+                    if(textProprietati.getText().isEmpty() )
+                    {
+                        MainPanel.infoBox("Un camp este necompletat.", "Error");
+                        return;
+                    }
                     Frigorific frg = DBUtils.GetFrigorificForUpdateDelete(id_frigorific);
                     Object selectedObj = comboBoxIdProdus.getSelectedItem();
                     Produs prd = (Produs) selectedObj;
