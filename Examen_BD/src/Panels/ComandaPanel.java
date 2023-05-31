@@ -95,10 +95,10 @@ public class ComandaPanel extends JPanel{
         add(tfldDataPlasare);
         add(lblDataLivrare);
         add(tfldDataLivrare);
-        add(lblCostLivrare);
+       /* add(lblCostLivrare);
         add(tfldCostLivrare);
         add(lblPretTotal);
-        add(tfldPretTotal);
+        add(tfldPretTotal);*/
         add(lblMetodaPlata);
         add(tfldMetodaPlata);
         add(lblEsteLivrata);
@@ -121,10 +121,10 @@ public class ComandaPanel extends JPanel{
         tfldCostLivrare.setBounds(0, 185, 250, 25);
         lblPretTotal.setBounds(0, 210, 100, 25);
         tfldPretTotal.setBounds(0, 230, 250, 25);
-        lblMetodaPlata.setBounds(0, 255, 100, 25);
-        tfldMetodaPlata.setBounds(0, 275, 250, 25);
-        lblEsteLivrata.setBounds(0, 300, 100, 25);
-        tfldEsteLivrata.setBounds(0, 320, 250, 25);
+        lblMetodaPlata.setBounds(0, 165, 100, 25);
+        tfldMetodaPlata.setBounds(0, 185, 250, 25);
+        lblEsteLivrata.setBounds(0, 210, 100, 25);
+        tfldEsteLivrata.setBounds(0, 230, 250, 25);
         lblIdPersoane.setBounds(0, 385, 100, 25);
         comboBoxIdPersoane.setBounds(0, 405, 900, 25);
         lblIdAdresa.setBounds(0, 430, 100, 25);
@@ -135,7 +135,7 @@ public class ComandaPanel extends JPanel{
         //actions
         btnBack.addActionListener(e -> {
             try {
-                Main.changeCurrentPanel(new MainPanel());
+                Main.changeCurrentPanel(new PersoanaPanel());
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -220,8 +220,8 @@ public class ComandaPanel extends JPanel{
                                     adresaSelectata.getId_adresa(), 
                                     Date.valueOf(tfldDataPlasare.getText()), 
                                     Date.valueOf(tfldDataLivrare.getText()), 
-                                    Float.parseFloat(tfldCostLivrare.getText()),
-                                    Float.parseFloat(tfldPretTotal.getText()),
+                                    1,
+                                    1,
                                     tfldMetodaPlata.getText(),
                                     Boolean.valueOf(tfldEsteLivrata.getText())));
                     listaComenzi.setListData(DBUtils.GetComenzi());

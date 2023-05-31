@@ -49,7 +49,7 @@ public class PersoanaPanel extends JPanel {
         tfldPrenume = new JTextField(1);
         lblEmail = new JLabel("Email:");
         tfldEmail = new JTextField(1);
-        lblNumar = new JLabel("Numar:");
+        lblNumar = new JLabel("Numar telefon:");
         tfldNumar = new JTextField(1);
         btnAdaugare = new JButton("Adaugare");
         btnComanda = new JButton("Finalizeaza datele comenzii");

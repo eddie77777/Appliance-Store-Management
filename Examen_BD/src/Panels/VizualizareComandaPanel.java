@@ -65,8 +65,8 @@ public class VizualizareComandaPanel extends JPanel {
 
         data_plasare = new JTextArea("Data plasare: " + comanda.getData_plasare());
         data_livrare = new JTextArea("Data livrare: " + comanda.getData_livrare());
-        cost_livrare = new JTextArea("Cost livrare: " + comanda.getCost_livrare());
-        pret_total = new JTextArea("Pret total: " + comanda.getPret_total());
+        cost_livrare = new JTextArea("Cost livrare: " + produs.getPret());
+        pret_total = new JTextArea("Pret total: " + (produs.getPret()+10));
         metoda_plata = new JTextArea("Metoda plata: " + comanda.getMetoda_plata());
         este_livrata = new JTextArea("Status: " + comanda.getEste_livrata());
 

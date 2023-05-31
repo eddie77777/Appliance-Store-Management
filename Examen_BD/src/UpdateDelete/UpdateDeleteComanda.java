@@ -90,10 +90,10 @@ public class UpdateDeleteComanda {
         tfldCostLivrare.setBounds(184, 180, 400, 25);
         lblPretTotal.setBounds(184, 205, 400, 25);
         tfldPretTotal.setBounds(184, 230, 400, 25);
-        lblMetodaPlata.setBounds(184, 255, 400, 25);
-        tfldMetodaPlata.setBounds(184, 280, 400, 25);
-        lblEsteLivrata.setBounds(184, 305, 400, 25);
-        tfldEsteLivrata.setBounds(184, 330, 400, 25);
+        lblMetodaPlata.setBounds(184, 155, 400, 25);
+        tfldMetodaPlata.setBounds(184, 180, 400, 25);
+        lblEsteLivrata.setBounds(184, 205, 400, 25);
+        tfldEsteLivrata.setBounds(184, 230, 400, 25);
         lblIdPersoane.setBounds(50, 355, 400, 25);
         comboBoxIdPersoane.setBounds(50, 380, 668, 25);
         lblIdAdresa.setBounds(50, 405, 400, 25);
@@ -106,10 +106,10 @@ public class UpdateDeleteComanda {
         frame_update_delete_adresa.add(tfldDataLivrare);
         frame_update_delete_adresa.add(lblDataPlasare);
         frame_update_delete_adresa.add(tfldDataPlasare);
-        frame_update_delete_adresa.add(lblCostLivrare);
+      /*  frame_update_delete_adresa.add(lblCostLivrare);
         frame_update_delete_adresa.add(tfldCostLivrare);
         frame_update_delete_adresa.add(lblPretTotal);
-        frame_update_delete_adresa.add(tfldPretTotal);
+        frame_update_delete_adresa.add(tfldPretTotal);*/
         frame_update_delete_adresa.add(lblMetodaPlata);
         frame_update_delete_adresa.add(tfldMetodaPlata);
         frame_update_delete_adresa.add(lblEsteLivrata);
@@ -157,8 +157,8 @@ public class UpdateDeleteComanda {
                     Comanda comanda = DBUtils.GetComandaForUpdateDelete(id_comanda);
                     comanda.setData_livrare(Date.valueOf(tfldDataLivrare.getText()));
                     comanda.setData_plasare(Date.valueOf(tfldDataPlasare.getText()));
-                    comanda.setCost_livrare(Float.parseFloat(tfldCostLivrare.getText()));
-                    comanda.setPret_total(Float.parseFloat(tfldPretTotal.getText()));
+                    comanda.setCost_livrare(1);
+                    comanda.setPret_total(1);
                     comanda.setMetoda_plata(tfldMetodaPlata.getText());
                     comanda.setEste_livrata(Boolean.valueOf(tfldEsteLivrata.getText()));
 
