@@ -1,4 +1,4 @@
-# ExamenBD
+# Appliance-Store-Management
 
 Pasi de rulare:
 Dezarhivati arhiva intr-un loc cu acces de write pe device-ul dumneavoastra;
